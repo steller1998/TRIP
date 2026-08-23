@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://steller1998.github.io/TRIP/sitemap.xml
