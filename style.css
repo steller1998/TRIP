@@ -1457,3 +1457,55 @@ footer {
         bottom: 16px;
     }
 }
+/* =========================================
+   TRIPORA — 3D SILVER LOGO
+========================================= */
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    height: 64px;
+}
+
+.logo-image {
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+    display: block;
+
+    filter:
+        drop-shadow(0 3px 5px rgba(0, 0, 0, 0.35))
+        drop-shadow(0 0 2px rgba(255, 255, 255, 0.25));
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.logo:hover .logo-image {
+    transform: scale(1.07);
+
+    filter:
+        drop-shadow(0 5px 9px rgba(0, 0, 0, 0.45))
+        drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
+}
+
+
+/* =========================================
+   MOBILE LOGO
+========================================= */
+
+@media (max-width: 768px) {
+
+    .logo {
+        height: 52px;
+    }
+
+    .logo-image {
+        width: 50px;
+        height: 50px;
+    }
+}
