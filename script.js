@@ -10,7 +10,7 @@ const configs={
     ["travellers","Travellers & Class","text","1 Traveller · Economy"]
   ]},
   Hotels:{helper:"Find a stay by city, dates, guests and hotel preference.",fields:[
-    ["city","City / Property","text","Goa"],
+    ["city","City / Property","text","Goa or Taj Palace"],
     ["checkin","Check-in","date",""],
     ["checkout","Check-out","date",""],
     ["guests","Rooms & Guests","text","1 Room · 2 Guests"],
@@ -432,6 +432,99 @@ const hotelCities=[
   "Cape Town, South Africa","Nairobi, Kenya","Mauritius, Mauritius"
 ];
 
+const hotelProperties=[
+  {n:"Taj Palace, New Delhi",c:"New Delhi",o:"India"},
+  {n:"The Leela Palace New Delhi",c:"New Delhi",o:"India"},
+  {n:"ITC Maurya, a Luxury Collection Hotel",c:"New Delhi",o:"India"},
+  {n:"The Imperial New Delhi",c:"New Delhi",o:"India"},
+  {n:"The Lalit New Delhi",c:"New Delhi",o:"India"},
+  {n:"JW Marriott Hotel New Delhi Aerocity",c:"New Delhi",o:"India"},
+  {n:"Radisson Blu Plaza Delhi Airport",c:"New Delhi",o:"India"},
+  {n:"The Oberoi Gurgaon",c:"Gurugram",o:"India"},
+  {n:"Trident Gurgaon",c:"Gurugram",o:"India"},
+  {n:"Taj City Centre Gurugram",c:"Gurugram",o:"India"},
+  {n:"The Leela Ambience Gurugram Hotel & Residences",c:"Gurugram",o:"India"},
+  {n:"Taj Mahal Palace, Mumbai",c:"Mumbai",o:"India"},
+  {n:"The Oberoi Mumbai",c:"Mumbai",o:"India"},
+  {n:"Trident Nariman Point",c:"Mumbai",o:"India"},
+  {n:"ITC Maratha, a Luxury Collection Hotel",c:"Mumbai",o:"India"},
+  {n:"The St. Regis Mumbai",c:"Mumbai",o:"India"},
+  {n:"Taj Santacruz",c:"Mumbai",o:"India"},
+  {n:"Taj Exotica Resort & Spa, Goa",c:"Goa",o:"India"},
+  {n:"W Goa",c:"Goa",o:"India"},
+  {n:"The Leela Goa",c:"Goa",o:"India"},
+  {n:"ITC Grand Goa Resort & Spa",c:"Goa",o:"India"},
+  {n:"Grand Hyatt Goa",c:"Goa",o:"India"},
+  {n:"Taj Fort Aguada Resort & Spa",c:"Goa",o:"India"},
+  {n:"Taj West End",c:"Bengaluru",o:"India"},
+  {n:"The Leela Palace Bengaluru",c:"Bengaluru",o:"India"},
+  {n:"ITC Gardenia, a Luxury Collection Hotel",c:"Bengaluru",o:"India"},
+  {n:"The Oberoi Bengaluru",c:"Bengaluru",o:"India"},
+  {n:"Taj Krishna",c:"Hyderabad",o:"India"},
+  {n:"ITC Kohenur, a Luxury Collection Hotel",c:"Hyderabad",o:"India"},
+  {n:"Taj Deccan",c:"Hyderabad",o:"India"},
+  {n:"The Leela Palace Chennai",c:"Chennai",o:"India"},
+  {n:"ITC Grand Chola",c:"Chennai",o:"India"},
+  {n:"Taj Coromandel",c:"Chennai",o:"India"},
+  {n:"Taj Bengal",c:"Kolkata",o:"India"},
+  {n:"ITC Royal Bengal",c:"Kolkata",o:"India"},
+  {n:"The Oberoi Grand Kolkata",c:"Kolkata",o:"India"},
+  {n:"Rambagh Palace",c:"Jaipur",o:"India"},
+  {n:"The Oberoi Rajvilas Jaipur",c:"Jaipur",o:"India"},
+  {n:"ITC Rajputana, a Luxury Collection Hotel",c:"Jaipur",o:"India"},
+  {n:"Taj Jai Mahal Palace",c:"Jaipur",o:"India"},
+  {n:"Taj Lake Palace",c:"Udaipur",o:"India"},
+  {n:"The Oberoi Udaivilas",c:"Udaipur",o:"India"},
+  {n:"Trident Udaipur",c:"Udaipur",o:"India"},
+  {n:"The Oberoi Amarvilas",c:"Agra",o:"India"},
+  {n:"ITC Mughal, a Luxury Collection Resort & Spa",c:"Agra",o:"India"},
+  {n:"Taj Hotel & Convention Centre Agra",c:"Agra",o:"India"},
+  {n:"Taj Rishikesh Resort & Spa",c:"Rishikesh",o:"India"},
+  {n:"Aloha On The Ganges",c:"Rishikesh",o:"India"},
+  {n:"Taj Madikeri Resort & Spa",c:"Coorg",o:"India"},
+  {n:"The Leela Palace Udaipur",c:"Udaipur",o:"India"},
+  {n:"Taj Corbett Resort & Spa",c:"Corbett",o:"India"},
+  {n:"The Oberoi Cecil",c:"Shimla",o:"India"},
+  {n:"Wildflower Hall, An Oberoi Resort",c:"Shimla",o:"India"},
+  {n:"Hyatt Regency Delhi",c:"New Delhi",o:"India"},
+  {n:"Hyatt Regency Mumbai",c:"Mumbai",o:"India"},
+  {n:"Hyatt Regency Goa Resort and Spa",c:"Goa",o:"India"},
+  {n:"Taj Dubai",c:"Dubai",o:"United Arab Emirates"},
+  {n:"Burj Al Arab Jumeirah",c:"Dubai",o:"United Arab Emirates"},
+  {n:"Atlantis, The Palm",c:"Dubai",o:"United Arab Emirates"},
+  {n:"JW Marriott Marquis Hotel Dubai",c:"Dubai",o:"United Arab Emirates"},
+  {n:"Jumeirah Beach Hotel",c:"Dubai",o:"United Arab Emirates"},
+  {n:"The Ritz-Carlton Dubai",c:"Dubai",o:"United Arab Emirates"},
+  {n:"Palace Downtown",c:"Dubai",o:"United Arab Emirates"},
+  {n:"Raffles Dubai",c:"Dubai",o:"United Arab Emirates"},
+  {n:"Emirates Palace Mandarin Oriental",c:"Abu Dhabi",o:"United Arab Emirates"},
+  {n:"The Ritz-Carlton Abu Dhabi, Grand Canal",c:"Abu Dhabi",o:"United Arab Emirates"},
+  {n:"The Savoy",c:"London",o:"United Kingdom"},
+  {n:"The Ritz London",c:"London",o:"United Kingdom"},
+  {n:"The Langham, London",c:"London",o:"United Kingdom"},
+  {n:"The Dorchester",c:"London",o:"United Kingdom"},
+  {n:"Park Hyatt Paris-Vendôme",c:"Paris",o:"France"},
+  {n:"The Ritz Paris",c:"Paris",o:"France"},
+  {n:"Shangri-La Paris",c:"Paris",o:"France"},
+  {n:"The Plaza",c:"New York",o:"United States"},
+  {n:"The St. Regis New York",c:"New York",o:"United States"},
+  {n:"Park Hyatt New York",c:"New York",o:"United States"},
+  {n:"Marina Bay Sands",c:"Singapore",o:"Singapore"},
+  {n:"Raffles Singapore",c:"Singapore",o:"Singapore"},
+  {n:"The Fullerton Hotel Singapore",c:"Singapore",o:"Singapore"},
+  {n:"The Peninsula Hong Kong",c:"Hong Kong",o:"Hong Kong"},
+  {n:"The Tokyo Station Hotel",c:"Tokyo",o:"Japan"},
+  {n:"Park Hyatt Tokyo",c:"Tokyo",o:"Japan"},
+  {n:"The Peninsula Tokyo",c:"Tokyo",o:"Japan"},
+  {n:"The Grand Hyatt Bangkok",c:"Bangkok",o:"Thailand"},
+  {n:"The Peninsula Bangkok",c:"Bangkok",o:"Thailand"},
+  {n:"The Westin Resort Nusa Dua",c:"Bali",o:"Indonesia"},
+  {n:"Four Seasons Resort Bali at Sayan",c:"Bali",o:"Indonesia"},
+  {n:"The St. Regis Maldives Vommuli Resort",c:"Maldives",o:"Maldives"},
+  {n:"Anantara Iko Mauritius Resort & Villas",c:"Mauritius",o:"Mauritius"},
+  {n:"Burj Al Arab",c:"Dubai",o:"United Arab Emirates"}
+];
+
 const suggestionOptions={
   class:["Economy","Premium Economy","Business","First Class","Sleeper","3A","2A","1A","AC Chair Car"],
   hoteltype:["Budget","3 Star","4 Star","5 Star","Luxury","Resort","Business Hotel"],
@@ -511,11 +604,45 @@ function getServiceSuggestions(service,id,query){
   if(service==="Forex" && id==="purpose") return textListSuggestions(suggestionOptions.purpose,query);
 
   if(service==="Hotels" && id==="city"){
-    return textListSuggestions(hotelCities,query,8).map(item=>({
+    const q=normalizeAirportText(query);
+    const cityItems=textListSuggestions(hotelCities,query,6).map(item=>({
       ...item,
+      code:"CITY",
       label:item.label.split(", ")[0],
-      sub:item.label.includes(", ")?item.label.split(", ").slice(1).join(", "):""
+      sub:(item.label.includes(", ")?item.label.split(", ").slice(1).join(", "):"")+" · Destination"
     }));
+
+    const hotelItems=hotelProperties
+      .map(hotel=>{
+        const name=normalizeAirportText(hotel.n);
+        const city=normalizeAirportText(hotel.c);
+        const hay=name+" "+city+" "+normalizeAirportText(hotel.o);
+        let score=0;
+        if(name===q) score+=1000;
+        if(name.startsWith(q)) score+=650;
+        if(city===q) score+=600;
+        if(city.startsWith(q)) score+=420;
+        if(hay.includes(q)) score+=260;
+        return {hotel,score};
+      })
+      .filter(item=>item.score>0)
+      .sort((a,b)=>b.score-a.score || a.hotel.n.localeCompare(b.hotel.n))
+      .slice(0,8)
+      .map(item=>({
+        code:"HOTEL",
+        label:item.hotel.n,
+        sub:item.hotel.c+" · "+item.hotel.o+" · Hotel",
+        score:item.score
+      }));
+
+    const merged=[...hotelItems,...cityItems];
+    const seen=new Set();
+    return merged.filter(item=>{
+      const key=item.label+"|"+item.code;
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0,10);
   }
   if(service==="Hotels" && id==="hoteltype") return textListSuggestions(suggestionOptions.hoteltype,query);
   if(service==="Homestays" && id==="staytype") return textListSuggestions(suggestionOptions.staytype,query);
