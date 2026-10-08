@@ -341,6 +341,247 @@ function setupAirportAutocomplete(){
   });
 }
 
+const stationSuggestions=[
+  "New Delhi Railway Station · New Delhi",
+  "Old Delhi Railway Station · Delhi",
+  "Anand Vihar Terminal · Delhi",
+  "Hazrat Nizamuddin · Delhi",
+  "Mumbai Central · Mumbai",
+  "Chhatrapati Shivaji Maharaj Terminus · Mumbai",
+  "Lokmanya Tilak Terminus · Mumbai",
+  "Bandra Terminus · Mumbai",
+  "Howrah Junction · Kolkata",
+  "Sealdah · Kolkata",
+  "Kolkata Railway Station · Kolkata",
+  "Chennai Central · Chennai",
+  "Chennai Egmore · Chennai",
+  "Bengaluru City Railway Station · Bengaluru",
+  "KSR Bengaluru · Bengaluru",
+  "Hyderabad Deccan · Hyderabad",
+  "Secunderabad Junction · Hyderabad",
+  "Guwahati Railway Station · Guwahati",
+  "Pune Junction · Pune",
+  "Ahmedabad Junction · Ahmedabad",
+  "Jaipur Junction · Jaipur",
+  "Lucknow Charbagh · Lucknow",
+  "Varanasi Junction · Varanasi",
+  "Patna Junction · Patna",
+  "Bhopal Junction · Bhopal",
+  "Indore Junction · Indore",
+  "Bhubaneswar · Bhubaneswar",
+  "Cuttack · Cuttack",
+  "Amritsar Junction · Amritsar",
+  "Chandigarh · Chandigarh",
+  "Dehradun · Dehradun",
+  "Haridwar Junction · Haridwar",
+  "Rishikesh · Rishikesh",
+  "Agra Cantt · Agra",
+  "Kanpur Central · Kanpur",
+  "Nagpur · Nagpur",
+  "Surat · Surat",
+  "Kochi Ernakulam · Kochi",
+  "Thiruvananthapuram Central · Thiruvananthapuram",
+  "Goa Madgaon · Goa",
+  "Vijayawada Junction · Vijayawada"
+];
+
+const countries=[
+  "India","United Arab Emirates","United Kingdom","United States","Singapore","Thailand","Malaysia","Indonesia",
+  "France","Germany","Italy","Spain","Switzerland","Netherlands","Australia","New Zealand","Japan","South Korea",
+  "Canada","Qatar","Saudi Arabia","Oman","Bahrain","Kuwait","Nepal","Bhutan","Sri Lanka","Maldives","Mauritius",
+  "Egypt","Turkey","Vietnam","Philippines","Hong Kong","China","South Africa","Kenya","Tanzania","Seychelles",
+  "Bangladesh","Bhutan","Pakistan","Bangladesh","Ireland","Portugal","Greece","Austria","Belgium","Norway",
+  "Sweden","Denmark","Finland","Brazil","Mexico","Russia","Georgia","Armenia","Azerbaijan","Uzbekistan"
+];
+
+const activities=[
+  "City Tour","Sightseeing","Desert Safari","Scuba Diving","Snorkelling","Paragliding","Trekking",
+  "River Rafting","Skiing","Cruise Dinner","Museum Visit","Theme Park","Water Park","Wildlife Safari",
+  "Adventure Activities","Beach Activities","Cultural Tour","Food Tour","Shopping Tour","Photography Tour"
+];
+
+const currencies=[
+  "INR – Indian Rupee","AED – UAE Dirham","USD – US Dollar","EUR – Euro","GBP – British Pound",
+  "SGD – Singapore Dollar","THB – Thai Baht","MYR – Malaysian Ringgit","AUD – Australian Dollar",
+  "CAD – Canadian Dollar","JPY – Japanese Yen","SAR – Saudi Riyal","QAR – Qatari Riyal","OMR – Omani Rial",
+  "BHD – Bahraini Dinar","KWD – Kuwaiti Dinar","CHF – Swiss Franc"
+];
+
+const suggestionOptions={
+  class:["Economy","Premium Economy","Business","First Class","Sleeper","3A","2A","1A","AC Chair Car"],
+  hoteltype:["Budget","3 Star","4 Star","5 Star","Luxury","Resort","Business Hotel"],
+  staytype:["Homestay","Villa","Apartment","Guest House","Resort","Cottage"],
+  busType:["AC Seater","AC Sleeper","Non-AC","Volvo","Luxury","Sleeper"],
+  cabin:["Interior","Ocean View","Balcony","Suite","Family Cabin"],
+  visaType:["Tourist Visa","Business Visa","Student Visa","Transit Visa","Work Visa","Family / Visit Visa"],
+  nationality:["Indian","British","American","Canadian","Australian","Singaporean","UAE","Nepalese","Bangladeshi"],
+  purpose:["Holiday","Business","Study","Family Visit","Medical Travel"],
+  plan:["Individual","Family","Senior","Couple","Single Trip","Multi Trip"]
+};
+
+function citySuggestions(query,limit=8){
+  const q=normalizeAirportText(query);
+  if(q.length<2) return [];
+
+  const results=[];
+  const seen=new Set();
+
+  for(const airport of airportData){
+    const city=airport.c || "";
+    const name=airport.n || "";
+    const iata=airport.i || "";
+    const hay=normalizeAirportText([city,name,iata].join(" "));
+    if(!hay.includes(q)) continue;
+
+    const key=city.toLowerCase()+"|"+airport.o;
+    if(seen.has(key)) continue;
+    seen.add(key);
+
+    let score=0;
+    if(normalizeAirportText(city).startsWith(q)) score+=500;
+    if(normalizeAirportText(name).startsWith(q)) score+=350;
+    if(normalizeAirportText(iata)===q) score+=300;
+    if(hay.includes(q)) score+=120;
+
+    results.push({
+      label:city || name,
+      sub:airport.o || "",
+      score
+    });
+  }
+
+  results.sort((a,b)=>b.score-a.score || a.label.localeCompare(b.label));
+  return results.slice(0,limit);
+}
+
+function textListSuggestions(list,query,limit=8){
+  const q=normalizeAirportText(query);
+  if(q.length<2) return [];
+
+  return list
+    .map(item=>({label:item,sub:"",score:normalizeAirportText(item).startsWith(q)?500:(normalizeAirportText(item).includes(q)?250:0)}))
+    .filter(item=>item.score>0)
+    .sort((a,b)=>b.score-a.score || a.label.localeCompare(b.label))
+    .slice(0,limit);
+}
+
+function getServiceSuggestions(service,id,query){
+  if(service==="Flights") return [];
+
+  if(service==="Trains" && (id==="from" || id==="to")){
+    const q=normalizeAirportText(query);
+    return stationSuggestions
+      .map(item=>({label:item.split(" · ")[0],sub:item.split(" · ")[1]||"",score:normalizeAirportText(item).includes(q)?300:0}))
+      .filter(item=>item.score>0)
+      .slice(0,8);
+  }
+
+  if(service==="Visa" && id==="destination") return textListSuggestions(countries,query);
+  if(service==="Visa" && id==="visaType") return textListSuggestions(suggestionOptions.visaType,query);
+  if(service==="Visa" && id==="nationality") return textListSuggestions(suggestionOptions.nationality,query);
+
+  if(service==="Tours" && id==="activity") return textListSuggestions(activities,query);
+  if(service==="Tours" && id==="destination") return citySuggestions(query);
+  if(service==="Forex" && id==="currency") return textListSuggestions(currencies,query);
+  if(service==="Forex" && id==="purpose") return textListSuggestions(suggestionOptions.purpose,query);
+
+  if(service==="Hotels" && id==="hoteltype") return textListSuggestions(suggestionOptions.hoteltype,query);
+  if(service==="Homestays" && id==="staytype") return textListSuggestions(suggestionOptions.staytype,query);
+  if(service==="Buses" && id==="busType") return textListSuggestions(suggestionOptions.busType,query);
+  if(service==="Cruise" && id==="cabin") return textListSuggestions(suggestionOptions.cabin,query);
+  if(service==="Insurance" && id==="plan") return textListSuggestions(suggestionOptions.plan,query);
+  if((service==="Flights" || service==="Trains") && id==="class") return textListSuggestions(suggestionOptions.class,query);
+
+  const placeFields=["city","destination","from","to","pickup","drop"];
+  if(placeFields.includes(id)) return citySuggestions(query);
+
+  return [];
+}
+
+function setupServiceAutocomplete(){
+  if(activeTab==="Flights") return;
+
+  const fieldIds=[...document.querySelectorAll("#dynamicFields input")];
+
+  fieldIds.forEach(input=>{
+    if(input.dataset.autocompleteReady==="1") return;
+
+    const id=(input.name||"").trim();
+    if(!id) return;
+
+    input.dataset.autocompleteReady="1";
+    input.setAttribute("autocomplete","off");
+    input.setAttribute("aria-autocomplete","list");
+
+    const host=input.parentElement;
+    host.classList.add("airport-field");
+
+    const box=document.createElement("div");
+    box.className="airport-suggestions";
+    box.setAttribute("role","listbox");
+    host.appendChild(box);
+
+    let timer=null;
+
+    const renderItems=(items)=>{
+      box.innerHTML="";
+      if(!items.length){
+        box.classList.remove("show");
+        return;
+      }
+
+      items.forEach(item=>{
+        const option=document.createElement("button");
+        option.type="button";
+        option.className="airport-option";
+        option.setAttribute("role","option");
+        option.innerHTML=`
+          <span class="airport-code">${item.code || "•"}</span>
+          <span class="airport-main">
+            <strong>${item.label}</strong>
+            <small>${item.sub || ""}</small>
+          </span>`;
+        option.addEventListener("mousedown",event=>event.preventDefault());
+        option.addEventListener("click",()=>{
+          input.value=item.label;
+          box.classList.remove("show");
+          input.dispatchEvent(new Event("change",{bubbles:true}));
+        });
+        box.appendChild(option);
+      });
+
+      box.classList.add("show");
+    };
+
+    input.addEventListener("input",()=>{
+      const query=input.value.trim();
+      clearTimeout(timer);
+
+      if(query.length<2){
+        box.classList.remove("show");
+        return;
+      }
+
+      timer=setTimeout(async()=>{
+        if(!airportData.length) await loadAirports();
+        renderItems(getServiceSuggestions(activeTab,id,query));
+      },70);
+    });
+
+    input.addEventListener("focus",()=>{
+      if(input.value.trim().length>=2){
+        renderItems(getServiceSuggestions(activeTab,id,input.value));
+      }
+      if(!airportData.length) loadAirports();
+    });
+
+    input.addEventListener("blur",()=>{
+      setTimeout(()=>box.classList.remove("show"),160);
+    });
+  });
+}
+
+
 function getActiveFields(tabName){
   if(tabName !== "Flights") return configs[tabName].fields;
 
@@ -401,6 +642,7 @@ function render(tabName){
   });
 
   setupAirportAutocomplete();
+  setupServiceAutocomplete();
 }
 
 function selectTab(tabName,shouldScroll){
