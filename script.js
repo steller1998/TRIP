@@ -96,7 +96,242 @@ const specialFareBox=document.getElementById("specialFareBox");
 const booking=document.getElementById("booking");
 let activeTab="Flights";
 
+const AIRPORT_DATA_URL="https://davidmegginson.github.io/ourairports-data/airports.csv";
+let airportDataPromise=null;
+let airportData=[];
+
+const fallbackAirports=[
+  {i:"DEL",n:"Indira Gandhi International Airport",c:"Delhi",o:"India"},
+  {i:"BOM",n:"Chhatrapati Shivaji Maharaj International Airport",c:"Mumbai",o:"India"},
+  {i:"BLR",n:"Kempegowda International Airport",c:"Bengaluru",o:"India"},
+  {i:"HYD",n:"Rajiv Gandhi International Airport",c:"Hyderabad",o:"India"},
+  {i:"MAA",n:"Chennai International Airport",c:"Chennai",o:"India"},
+  {i:"CCU",n:"Netaji Subhas Chandra Bose International Airport",c:"Kolkata",o:"India"},
+  {i:"GOI",n:"Manohar International Airport",c:"Goa",o:"India"},
+  {i:"GOX",n:"Manohar International Airport",c:"North Goa",o:"India"},
+  {i:"GAU",n:"Lokpriya Gopinath Bordoloi International Airport",c:"Guwahati",o:"India"},
+  {i:"DXB",n:"Dubai International Airport",c:"Dubai",o:"United Arab Emirates"},
+  {i:"AUH",n:"Zayed International Airport",c:"Abu Dhabi",o:"United Arab Emirates"},
+  {i:"LHR",n:"Heathrow Airport",c:"London",o:"United Kingdom"},
+  {i:"LGW",n:"Gatwick Airport",c:"London",o:"United Kingdom"},
+  {i:"JFK",n:"John F. Kennedy International Airport",c:"New York",o:"United States"},
+  {i:"SIN",n:"Singapore Changi Airport",c:"Singapore",o:"Singapore"},
+  {i:"HND",n:"Haneda Airport",c:"Tokyo",o:"Japan"},
+  {i:"CDG",n:"Charles de Gaulle Airport",c:"Paris",o:"France"},
+  {i:"SYD",n:"Sydney Kingsford Smith Airport",c:"Sydney",o:"Australia"}
+];
+
 function today(){return new Date().toISOString().split("T")[0];}
+
+function parseCsvLine(line){
+  const out=[];
+  let field="";
+  let quoted=false;
+  for(let i=0;i<line.length;i++){
+    const ch=line[i];
+    if(ch==="""){
+      if(quoted && line[i+1]==="""){field+=""";i++;}
+      else quoted=!quoted;
+    }else if(ch==="," && !quoted){
+      out.push(field);field="";
+    }else{
+      field+=ch;
+    }
+  }
+  out.push(field);
+  return out;
+}
+
+async function loadAirports(){
+  if(airportData.length) return airportData;
+  if(airportDataPromise) return airportDataPromise;
+
+  airportDataPromise=(async()=>{
+    try{
+      const cached=localStorage.getItem("tripora_airports_v1");
+      if(cached){
+        const parsed=JSON.parse(cached);
+        if(Array.isArray(parsed) && parsed.length>1000){
+          airportData=parsed;
+          return airportData;
+        }
+      }
+    }catch(_){}
+
+    try{
+      const response=await fetch(AIRPORT_DATA_URL,{cache:"force-cache"});
+      if(!response.ok) throw new Error("Airport data request failed");
+      const csv=await response.text();
+      const lines=csv.split(/\r?\n/);
+      const headers=parseCsvLine(lines.shift()||"");
+      const index={};
+      headers.forEach((h,i)=>index[h]=i);
+
+      const records=[];
+      for(const line of lines){
+        if(!line) continue;
+        const row=parseCsvLine(line);
+        const iata=(row[index.iata_code]||"").trim().toUpperCase();
+        const type=(row[index.type]||"").trim().toLowerCase();
+        if(!iata || iata.length!==3 || type==="closed") continue;
+
+        const name=(row[index.name]||"").trim();
+        const city=(row[index.municipality]||"").trim();
+        const country=(row[index.iso_country]||"").trim();
+        const gps=(row[index.gps_code]||"").trim().toUpperCase();
+        const keywords=(row[index.keywords]||"").trim();
+
+        records.push({i:iata,n:name,c:city,o:country,g:gps,k:keywords});
+      }
+
+      const unique=new Map();
+      for(const airport of records){
+        const key=airport.i+"|"+airport.n+"|"+airport.c;
+        if(!unique.has(key)) unique.set(key,airport);
+      }
+
+      airportData=[...unique.values()];
+      try{
+        localStorage.setItem("tripora_airports_v1",JSON.stringify(airportData));
+      }catch(_){}
+      return airportData;
+    }catch(error){
+      airportData=fallbackAirports;
+      return airportData;
+    }
+  })();
+
+  return airportDataPromise;
+}
+
+function normalizeAirportText(value){
+  return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+}
+
+function rankAirportMatches(query){
+  const q=normalizeAirportText(query);
+  if(q.length<2) return [];
+
+  const words=q.split(/\s+/).filter(Boolean);
+  const scored=[];
+
+  for(const airport of airportData){
+    const name=normalizeAirportText(airport.n);
+    const city=normalizeAirportText(airport.c);
+    const iata=normalizeAirportText(airport.i);
+    const keywords=normalizeAirportText(airport.k||"");
+    const haystack=[name,city,iata,airport.g||"",keywords].join(" ");
+
+    let score=0;
+    if(iata===q) score+=1000;
+    if(name.startsWith(q)) score+=600;
+    if(city.startsWith(q)) score+=550;
+    if(haystack.includes(q)) score+=300;
+
+    let allWords=true;
+    for(const word of words){
+      if(!haystack.includes(word)){allWords=false;break;}
+    }
+    if(allWords) score+=220;
+
+    if(score>0) scored.push({airport,score});
+  }
+
+  scored.sort((a,b)=>{
+    if(b.score!==a.score) return b.score-a.score;
+    return a.airport.n.localeCompare(b.airport.n);
+  });
+
+  return scored.slice(0,8).map(item=>item.airport);
+}
+
+function setupAirportAutocomplete(){
+  if(activeTab!=="Flights") return;
+
+  ["from","to"].forEach(id=>{
+    const input=document.getElementById("field-"+id);
+    if(!input || input.dataset.airportReady==="1") return;
+
+    input.dataset.airportReady="1";
+    input.setAttribute("autocomplete","off");
+    input.setAttribute("aria-autocomplete","list");
+
+    const host=input.parentElement;
+    host.classList.add("airport-field");
+
+    const box=document.createElement("div");
+    box.className="airport-suggestions";
+    box.setAttribute("role","listbox");
+    host.appendChild(box);
+
+    let timer=null;
+
+    const renderSuggestions=(items,message)=>{
+      box.innerHTML="";
+      if(message){
+        box.innerHTML=`<div class="airport-status">${message}</div>`;
+        box.classList.add("show");
+        return;
+      }
+      if(!items.length){
+        box.classList.remove("show");
+        return;
+      }
+
+      items.forEach(airport=>{
+        const option=document.createElement("button");
+        option.type="button";
+        option.className="airport-option";
+        option.setAttribute("role","option");
+        option.innerHTML=`
+          <span class="airport-code">${airport.i}</span>
+          <span class="airport-main">
+            <strong>${airport.n}</strong>
+            <small>${airport.c ? airport.c+" · " : ""}${airport.o || ""}</small>
+          </span>`;
+        option.addEventListener("mousedown",event=>event.preventDefault());
+        option.addEventListener("click",()=>{
+          input.value=`${airport.n} (${airport.i})`;
+          box.classList.remove("show");
+          input.dispatchEvent(new Event("change",{bubbles:true}));
+        });
+        box.appendChild(option);
+      });
+      box.classList.add("show");
+    };
+
+    input.addEventListener("input",()=>{
+      const query=input.value.trim();
+      clearTimeout(timer);
+      if(query.length<2){
+        box.classList.remove("show");
+        return;
+      }
+
+      if(!airportData.length){
+        renderSuggestions([], "Loading worldwide airports…");
+      }
+
+      timer=setTimeout(async()=>{
+        await loadAirports();
+        const matches=rankAirportMatches(query);
+        renderSuggestions(matches,matches.length?"":"No matching airport found");
+      },80);
+    });
+
+    input.addEventListener("focus",()=>{
+      if(input.value.trim().length>=2){
+        const matches=rankAirportMatches(input.value);
+        if(matches.length) renderSuggestions(matches);
+      }
+      if(!airportData.length) loadAirports();
+    });
+
+    input.addEventListener("blur",()=>{
+      setTimeout(()=>box.classList.remove("show"),160);
+    });
+  });
+}
 
 function getActiveFields(tabName){
   if(tabName !== "Flights") return configs[tabName].fields;
@@ -156,6 +391,8 @@ function render(tabName){
   document.querySelectorAll(".fare-option").forEach(option=>{
     option.classList.toggle("active",option.querySelector("input")?.checked);
   });
+
+  setupAirportAutocomplete();
 }
 
 function selectTab(tabName,shouldScroll){
