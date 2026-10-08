@@ -407,6 +407,31 @@ const currencies=[
   "BHD – Bahraini Dinar","KWD – Kuwaiti Dinar","CHF – Swiss Franc"
 ];
 
+const hotelCities=[
+  "Agra, India","Ahmedabad, India","Amritsar, India","Aurangabad, India","Bengaluru, India","Bhopal, India",
+  "Bhubaneswar, India","Chandigarh, India","Chennai, India","Coimbatore, India","Dehradun, India","Delhi, India",
+  "Dharamshala, India","Goa, India","Gurugram, India","Guwahati, India","Haridwar, India","Hyderabad, India",
+  "Jaipur, India","Jaisalmer, India","Jammu, India","Jodhpur, India","Kochi, India","Kolkata, India",
+  "Kullu, India","Lucknow, India","Manali, India","Mumbai, India","Mysuru, India","Nagpur, India",
+  "New Delhi, India","Noida, India","Ooty, India","Panchgani, India","Patna, India","Pondicherry, India",
+  "Pune, India","Rishikesh, India","Shillong, India","Shimla, India","Srinagar, India","Surat, India",
+  "Thiruvananthapuram, India","Udaipur, India","Varanasi, India","Vijayawada, India","Visakhapatnam, India",
+  "Abu Dhabi, United Arab Emirates","Al Ain, United Arab Emirates","Dubai, United Arab Emirates",
+  "Sharjah, United Arab Emirates","Singapore, Singapore","Bangkok, Thailand","Phuket, Thailand",
+  "Pattaya, Thailand","Kuala Lumpur, Malaysia","Langkawi, Malaysia","Bali, Indonesia","Jakarta, Indonesia",
+  "Malé, Maldives","Colombo, Sri Lanka","Kathmandu, Nepal","Thimphu, Bhutan","Dhaka, Bangladesh",
+  "London, United Kingdom","Manchester, United Kingdom","Edinburgh, United Kingdom","Paris, France",
+  "Nice, France","Rome, Italy","Milan, Italy","Venice, Italy","Barcelona, Spain","Madrid, Spain",
+  "Amsterdam, Netherlands","Berlin, Germany","Munich, Germany","Zurich, Switzerland","Vienna, Austria",
+  "Athens, Greece","Lisbon, Portugal","Dublin, Ireland","Istanbul, Türkiye","New York, United States",
+  "Los Angeles, United States","San Francisco, United States","Las Vegas, United States","Orlando, United States",
+  "Miami, United States","Chicago, United States","Toronto, Canada","Vancouver, Canada","Montreal, Canada",
+  "Sydney, Australia","Melbourne, Australia","Brisbane, Australia","Auckland, New Zealand","Tokyo, Japan",
+  "Osaka, Japan","Seoul, South Korea","Hong Kong, Hong Kong","Doha, Qatar","Riyadh, Saudi Arabia",
+  "Jeddah, Saudi Arabia","Muscat, Oman","Manama, Bahrain","Kuwait City, Kuwait","Cairo, Egypt",
+  "Cape Town, South Africa","Nairobi, Kenya","Mauritius, Mauritius"
+];
+
 const suggestionOptions={
   class:["Economy","Premium Economy","Business","First Class","Sleeper","3A","2A","1A","AC Chair Car"],
   hoteltype:["Budget","3 Star","4 Star","5 Star","Luxury","Resort","Business Hotel"],
@@ -485,6 +510,13 @@ function getServiceSuggestions(service,id,query){
   if(service==="Forex" && id==="currency") return textListSuggestions(currencies,query);
   if(service==="Forex" && id==="purpose") return textListSuggestions(suggestionOptions.purpose,query);
 
+  if(service==="Hotels" && id==="city"){
+    return textListSuggestions(hotelCities,query,8).map(item=>({
+      ...item,
+      label:item.label.split(", ")[0],
+      sub:item.label.includes(", ")?item.label.split(", ").slice(1).join(", "):""
+    }));
+  }
   if(service==="Hotels" && id==="hoteltype") return textListSuggestions(suggestionOptions.hoteltype,query);
   if(service==="Homestays" && id==="staytype") return textListSuggestions(suggestionOptions.staytype,query);
   if(service==="Buses" && id==="busType") return textListSuggestions(suggestionOptions.busType,query);
