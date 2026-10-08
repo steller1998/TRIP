@@ -88,28 +88,35 @@ let activeService = "";
 
 const serviceFieldSets = {
   "Flight Booking": [
-    ["from", "From", "text", "e.g. Guwahati"],
-    ["to", "To", "text", "e.g. Delhi / Dubai"],
-    ["date", "Travel Date", "date", ""],
-    ["travellers", "Travellers", "number", "1"]
+    ["from", "From Airport / City", "text", "e.g. Guwahati"],
+    ["to", "To Airport / City", "text", "e.g. Delhi / Dubai"],
+    ["departure", "Departure Date", "date", ""],
+    ["return", "Return Date", "date", ""],
+    ["passengers", "Passengers", "number", "1"],
+    ["class", "Travel Class", "text", "e.g. Economy"]
   ],
   "Train Booking": [
-    ["from", "From", "text", "e.g. Guwahati"],
-    ["to", "To", "text", "e.g. New Delhi"],
-    ["date", "Travel Date", "date", ""],
-    ["travellers", "Travellers", "number", "1"]
+    ["from", "From Station / City", "text", "e.g. Guwahati"],
+    ["to", "To Station / City", "text", "e.g. New Delhi"],
+    ["journey", "Journey Date", "date", ""],
+    ["passengers", "Passengers", "number", "1"],
+    ["coach", "Coach Preference", "text", "e.g. Sleeper / 3A"]
   ],
   "Hotel Booking": [
-    ["city", "City / Destination", "text", "e.g. Goa"],
-    ["checkin", "Check-in", "date", ""],
-    ["checkout", "Check-out", "date", ""],
-    ["guests", "Guests", "number", "2"]
+    ["destination", "Hotel City / Destination", "text", "e.g. Goa"],
+    ["checkin", "Check-in Date", "date", ""],
+    ["checkout", "Check-out Date", "date", ""],
+    ["guests", "Guests", "number", "2"],
+    ["rooms", "Rooms", "number", "1"],
+    ["hoteltype", "Hotel Preference", "text", "e.g. 4-star / Budget"]
   ],
   "Holiday Packages": [
-    ["destination", "Destination", "text", "e.g. Kashmir / Dubai"],
+    ["destination", "Holiday Destination", "text", "e.g. Kashmir / Dubai"],
     ["date", "Preferred Travel Date", "date", ""],
+    ["days", "Trip Duration (Days)", "number", "5"],
     ["travellers", "Travellers", "number", "2"],
-    ["budget", "Approx. Budget", "text", "e.g. ₹30,000"]
+    ["budget", "Approx. Budget", "text", "e.g. ₹30,000"],
+    ["interest", "Trip Type", "text", "e.g. Family / Honeymoon / Adventure"]
   ]
 };
 
@@ -180,131 +187,130 @@ document.addEventListener("keydown", function (event) {
 ========================================= */
 
 const tabs = document.querySelectorAll(".tab");
+const travelType = document.getElementById("travelType");
+const travelFields = document.getElementById("travelFields");
 
-const travelType =
-  document.getElementById("travelType");
+const travelFieldSets = {
+  Flight: [
+    ["from", "From Airport / City", "text", "e.g. Delhi"],
+    ["to", "To Airport / City", "text", "e.g. Dubai"],
+    ["travelDate", "Departure Date", "date", ""],
+    ["returnDate", "Return Date", "date", ""],
+    ["travellers", "Passengers", "number", "1"]
+  ],
+  Train: [
+    ["from", "From Station / City", "text", "e.g. Guwahati"],
+    ["to", "To Station / City", "text", "e.g. New Delhi"],
+    ["travelDate", "Journey Date", "date", ""],
+    ["travellers", "Passengers", "number", "1"],
+    ["coach", "Coach Preference", "text", "e.g. Sleeper / 3A"]
+  ],
+  Hotel: [
+    ["destination", "Hotel City / Destination", "text", "e.g. Goa"],
+    ["checkin", "Check-in Date", "date", ""],
+    ["checkout", "Check-out Date", "date", ""],
+    ["guests", "Guests", "number", "2"],
+    ["rooms", "Rooms", "number", "1"]
+  ],
+  Holiday: [
+    ["destination", "Holiday Destination", "text", "e.g. Kashmir"],
+    ["travelDate", "Preferred Travel Date", "date", ""],
+    ["days", "Trip Duration (Days)", "number", "5"],
+    ["travellers", "Travellers", "number", "2"],
+    ["budget", "Approx. Budget", "text", "e.g. ₹30,000"]
+  ]
+};
 
-const fromInput =
-  document.getElementById("from");
+function renderTravelFields(type) {
+  const fields = travelFieldSets[type] || travelFieldSets.Flight;
 
-const toInput =
-  document.getElementById("to");
+  travelFields.innerHTML = fields.map(function ([id, label, inputType, placeholder]) {
+    if (inputType === "number") {
+      return `
+        <label>
+          ${label}
+          <input
+            type="number"
+            id="${id}"
+            name="${id}"
+            min="1"
+            value="${placeholder}"
+            inputmode="numeric"
+            required>
+        </label>
+      `;
+    }
 
+    return `
+      <label>
+        ${label}
+        <input
+          type="${inputType}"
+          id="${id}"
+          name="${id}"
+          placeholder="${placeholder}"
+          required>
+      </label>
+    `;
+  }).join("");
+
+  const todayValue = new Date().toISOString().split("T")[0];
+  travelFields.querySelectorAll('input[type="date"]').forEach(function (input) {
+    input.min = todayValue;
+  });
+}
 
 tabs.forEach(function (tab) {
-
   tab.addEventListener("click", function () {
-
     tabs.forEach(function (item) {
       item.classList.remove("active");
     });
 
     tab.classList.add("active");
 
-    const type =
-      tab.getAttribute("data-type");
-
+    const type = tab.getAttribute("data-type");
     travelType.value = type;
-
-
-    if (type === "Hotel") {
-
-      fromInput.placeholder =
-        "e.g. Goa";
-
-      toInput.placeholder =
-        "e.g. 4-star hotel";
-
-    }
-
-    else if (type === "Holiday") {
-
-      fromInput.placeholder =
-        "e.g. Delhi";
-
-      toInput.placeholder =
-        "e.g. Kashmir";
-
-    }
-
-    else if (type === "Train") {
-
-      fromInput.placeholder =
-        "e.g. Guwahati";
-
-      toInput.placeholder =
-        "e.g. New Delhi";
-
-    }
-
-    else {
-
-      fromInput.placeholder =
-        "e.g. Delhi";
-
-      toInput.placeholder =
-        "e.g. Dubai";
-
-    }
-
+    renderTravelFields(type);
   });
-
 });
+
+renderTravelFields("Flight");
 
 
 /* =========================================
    ENQUIRY FORM
 ========================================= */
 
-const travelForm =
-  document.getElementById("travelForm");
-
+const travelForm = document.getElementById("travelForm");
 
 travelForm.addEventListener("submit", function (event) {
-
   event.preventDefault();
 
+  const type = travelType.value;
+  const formData = new FormData(travelForm);
+  const lines = [
+    "Hello Tripora,",
+    "",
+    `I want ${type.toLowerCase()} booking assistance.`,
+    ""
+  ];
 
-  const type =
-    travelType.value;
+  for (const [key, value] of formData.entries()) {
+    if (key === "travelType" || !value) continue;
 
-  const from =
-    document.getElementById("from").value;
+    const label = key
+      .replace(/([A-Z])/g, " $1")
+      .replace(/^./, function (c) { return c.toUpperCase(); });
 
-  const to =
-    document.getElementById("to").value;
+    lines.push(`${label}: ${value}`);
+  }
 
-  const date =
-    document.getElementById("travelDate").value;
-
-  const travellers =
-    document.getElementById("travellers").value;
-
-
-  const message =
-`Hello Tripora,
-
-I want ${type.toLowerCase()} booking assistance.
-
-From: ${from}
-To: ${to}
-Travel Date: ${date}
-Number of Travellers: ${travellers}
-
-Please help me with the available options.`;
-
-
-  const whatsappLink =
-    WHATSAPP_URL +
-    "?text=" +
-    encodeURIComponent(message);
-
+  lines.push("", "Please help me with the available options.");
 
   window.open(
-    whatsappLink,
+    WHATSAPP_URL + "?text=" + encodeURIComponent(lines.join("\\n")),
     "_blank"
   );
-
 });
 
 
