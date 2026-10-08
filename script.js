@@ -1,502 +1,150 @@
-/* =========================================
-   TRIPORA JAVASCRIPT
-========================================= */
+const WHATSAPP_NUMBER="919181565815";
+const WHATSAPP_URL="https://wa.me/"+WHATSAPP_NUMBER;
 
-const WHATSAPP_NUMBER = "919181565815";
-const WHATSAPP_URL = "https://wa.me/" + WHATSAPP_NUMBER;
-
-
-/* =========================================
-   NAVBAR
-========================================= */
-
-const navbar = document.getElementById("navbar");
-
-window.addEventListener("scroll", function () {
-
-  if (window.scrollY > 30) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
-  }
-
-});
-
-
-/* =========================================
-   MOBILE MENU
-========================================= */
-
-const menuBtn = document.getElementById("menuBtn");
-const navMenu = document.getElementById("navMenu");
-
-menuBtn.addEventListener("click", function () {
-
-  navMenu.classList.toggle("open");
-
-});
-
-
-document.querySelectorAll(".nav-menu a").forEach(function (link) {
-
-  link.addEventListener("click", function () {
-
-    navMenu.classList.remove("open");
-
-  });
-
-});
-
-
-/* =========================================
-   WHATSAPP BUTTONS
-========================================= */
-
-document
-  .querySelectorAll("[data-message]")
-  .forEach(function (button) {
-
-    button.addEventListener("click", function () {
-
-      const message = button.getAttribute("data-message");
-
-      const url =
-        WHATSAPP_URL +
-        "?text=" +
-        encodeURIComponent(message);
-
-      window.open(
-        url,
-        "_blank"
-      );
-
-    });
-
-  });
-
-
-/* =========================================
-   SERVICE BOOKING MODAL
-========================================= */
-
-const serviceModal = document.getElementById("serviceModal");
-const serviceModalTitle = document.getElementById("serviceModalTitle");
-const serviceModalIntro = document.getElementById("serviceModalIntro");
-const serviceFields = document.getElementById("serviceFields");
-const serviceBookingForm = document.getElementById("serviceBookingForm");
-let activeService = "";
-
-const serviceFieldSets = {
-  "Flight Booking": [
-    ["from", "From Airport / City", "text", "e.g. Guwahati"],
-    ["to", "To Airport / City", "text", "e.g. Delhi / Dubai"],
-    ["departure", "Departure Date", "date", ""],
-    ["return", "Return Date", "date", ""],
-    ["passengers", "Passengers", "number", "1"],
-    ["class", "Travel Class", "text", "e.g. Economy"]
-  ],
-  "Train Booking": [
-    ["from", "From Station / City", "text", "e.g. Guwahati"],
-    ["to", "To Station / City", "text", "e.g. New Delhi"],
-    ["journey", "Journey Date", "date", ""],
-    ["passengers", "Passengers", "number", "1"],
-    ["coach", "Coach Preference", "text", "e.g. Sleeper / 3A"]
-  ],
-  "Hotel Booking": [
-    ["destination", "Hotel City / Destination", "text", "e.g. Goa"],
-    ["checkin", "Check-in Date", "date", ""],
-    ["checkout", "Check-out Date", "date", ""],
-    ["guests", "Guests", "number", "2"],
-    ["rooms", "Rooms", "number", "1"],
-    ["hoteltype", "Hotel Preference", "text", "e.g. 4-star / Budget"]
-  ],
-  "Holiday Packages": [
-    ["destination", "Holiday Destination", "text", "e.g. Kashmir / Dubai"],
-    ["date", "Preferred Travel Date", "date", ""],
-    ["days", "Trip Duration (Days)", "number", "5"],
-    ["travellers", "Travellers", "number", "2"],
-    ["budget", "Approx. Budget", "text", "e.g. ₹30,000"],
-    ["interest", "Trip Type", "text", "e.g. Family / Honeymoon / Adventure"]
-  ]
+const configs={
+  Flights:{helper:"Book domestic and international flights with Tripora.",fields:[
+    ["from","From","text","Delhi"],
+    ["to","To","text","Dubai"],
+    ["departure","Departure","date",""],
+    ["return","Return","date",""],
+    ["travellers","Travellers & Class","text","1 Traveller · Economy"]
+  ]},
+  Hotels:{helper:"Find a stay that matches your dates, city and budget.",fields:[
+    ["city","City / Area","text","Goa"],
+    ["checkin","Check-in","date",""],
+    ["checkout","Check-out","date",""],
+    ["guests","Guests & Rooms","text","2 Guests · 1 Room"],
+    ["hoteltype","Hotel Preference","text","4 Star / Budget"]
+  ]},
+  Homestays:{helper:"Discover homestays, villas and unique stays.",fields:[
+    ["city","City / Destination","text","Manali"],
+    ["checkin","Check-in","date",""],
+    ["checkout","Check-out","date",""],
+    ["guests","Guests","number","2"],
+    ["staytype","Stay Type","text","Villa / Homestay"]
+  ]},
+  Holidays:{helper:"Plan a complete holiday with stays, sightseeing and transfers.",fields:[
+    ["destination","Destination","text","Kashmir"],
+    ["from","Starting City","text","Delhi"],
+    ["date","Travel Date","date",""],
+    ["nights","Nights","number","4"],
+    ["travellers","Travellers","number","2"]
+  ]},
+  Trains:{helper:"Share your route and journey date for train booking assistance.",fields:[
+    ["from","From Station / City","text","Guwahati"],
+    ["to","To Station / City","text","New Delhi"],
+    ["date","Journey Date","date",""],
+    ["passengers","Passengers","number","1"],
+    ["class","Class","text","3A / Sleeper"]
+  ]},
+  Buses:{helper:"Find bus options for your route and journey date.",fields:[
+    ["from","From City","text","Noida"],
+    ["to","To City","text","Delhi"],
+    ["date","Journey Date","date",""],
+    ["passengers","Passengers","number","1"],
+    ["busType","Bus Preference","text","AC / Sleeper"]
+  ]},
+  Cabs:{helper:"Plan airport transfers and point-to-point cab travel.",fields:[
+    ["pickup","Pickup","text","Delhi Airport"],
+    ["drop","Drop","text","Noida"],
+    ["date","Date","date",""],
+    ["time","Pickup Time","time",""],
+    ["passengers","Passengers","number","2"]
+  ]},
+  Tours:{helper:"Explore activities, attractions and local experiences.",fields:[
+    ["destination","Destination","text","Dubai"],
+    ["activity","Activity","text","City Tour"],
+    ["date","Date","date",""],
+    ["travellers","Travellers","number","2"],
+    ["budget","Approx. Budget","text","₹10,000"]
+  ]},
+  Visa:{helper:"Tell us your destination and travel plan for visa assistance.",fields:[
+    ["destination","Destination Country","text","UAE"],
+    ["travelDate","Travel Date","date",""],
+    ["travellers","Travellers","number","1"],
+    ["visaType","Visa Type","text","Tourist Visa"],
+    ["nationality","Nationality","text","Indian"]
+  ]}
 };
 
-function openServiceModal(service) {
-  activeService = service;
-  serviceModalTitle.textContent = service;
-  serviceModalIntro.textContent = `Share your ${service.toLowerCase()} requirements and Tripora will help you with the next step.`;
-  serviceFields.innerHTML = (serviceFieldSets[service] || []).map(([id, label, type, placeholder]) => `
-    <label>${label}<input id="service-${id}" name="${id}" type="${type}" ${type === "number" ? 'min="1" value="' + placeholder + '"' : `placeholder="${placeholder}"`} required></label>
-  `).join("");
-  serviceModal.classList.add("open");
-  serviceModal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("modal-open");
+const tabs=[...document.querySelectorAll("[data-tab]")];
+const fieldsEl=document.getElementById("dynamicFields");
+const helper=document.getElementById("bookHelper");
+const flightModes=document.getElementById("flightModes");
+const specialRow=document.getElementById("specialRow");
+let activeTab="Flights";
+
+function today(){
+  return new Date().toISOString().split("T")[0];
 }
-
-function closeServiceModal() {
-  serviceModal.classList.remove("open");
-  serviceModal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("modal-open");
-}
-
-document.querySelectorAll("[data-service]").forEach(function (element) {
-  element.addEventListener("click", function (event) {
-    if (event.target.closest("button")) return;
-    openServiceModal(element.getAttribute("data-service"));
-  });
-
-  element.addEventListener("keydown", function (event) {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      openServiceModal(element.getAttribute("data-service"));
-    }
-  });
-});
-
-document.querySelectorAll("[data-close-service]").forEach(function (button) {
-  button.addEventListener("click", closeServiceModal);
-});
-
-/* Directly wire the visible Book Now buttons too. */
-document.querySelectorAll(".text-button[data-service]").forEach(function (button) {
-  button.addEventListener("click", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    openServiceModal(button.getAttribute("data-service"));
-  });
-});
-
-serviceBookingForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  const formData = new FormData(serviceBookingForm);
-  const lines = [`Hello Tripora,`, ``, `I want ${activeService}.`, ``];
-  for (const [key, value] of formData.entries()) {
-    if (value) lines.push(`${key.replace(/^./, c => c.toUpperCase())}: ${value}`);
-  }
-  lines.push("", "Please share the available options and booking details.");
-  window.open(WHATSAPP_URL + "?text=" + encodeURIComponent(lines.join("\n")), "_blank");
-  closeServiceModal();
-});
-
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape" && serviceModal.classList.contains("open")) closeServiceModal();
-});
-
-
-/* =========================================
-   TRAVEL ENQUIRY TABS
-========================================= */
-
-const tabs = document.querySelectorAll(".tab");
-const travelType = document.getElementById("travelType");
-const travelFields = document.getElementById("travelFields");
-
-const travelFieldSets = {
-  Flight: [
-    ["from", "From Airport / City", "text", "e.g. Delhi"],
-    ["to", "To Airport / City", "text", "e.g. Dubai"],
-    ["travelDate", "Departure Date", "date", ""],
-    ["returnDate", "Return Date", "date", ""],
-    ["travellers", "Passengers", "number", "1"]
-  ],
-  Train: [
-    ["from", "From Station / City", "text", "e.g. Guwahati"],
-    ["to", "To Station / City", "text", "e.g. New Delhi"],
-    ["travelDate", "Journey Date", "date", ""],
-    ["travellers", "Passengers", "number", "1"],
-    ["coach", "Coach Preference", "text", "e.g. Sleeper / 3A"]
-  ],
-  Hotel: [
-    ["destination", "Hotel City / Destination", "text", "e.g. Goa"],
-    ["checkin", "Check-in Date", "date", ""],
-    ["checkout", "Check-out Date", "date", ""],
-    ["guests", "Guests", "number", "2"],
-    ["rooms", "Rooms", "number", "1"]
-  ],
-  Holiday: [
-    ["destination", "Holiday Destination", "text", "e.g. Kashmir"],
-    ["travelDate", "Preferred Travel Date", "date", ""],
-    ["days", "Trip Duration (Days)", "number", "5"],
-    ["travellers", "Travellers", "number", "2"],
-    ["budget", "Approx. Budget", "text", "e.g. ₹30,000"]
-  ]
-};
-
-function renderTravelFields(type) {
-  const fields = travelFieldSets[type] || travelFieldSets.Flight;
-
-  travelFields.innerHTML = fields.map(function ([id, label, inputType, placeholder]) {
-    if (inputType === "number") {
-      return `
-        <label>
-          ${label}
-          <input
-            type="number"
-            id="${id}"
-            name="${id}"
-            min="1"
-            value="${placeholder}"
-            inputmode="numeric"
-            required>
-        </label>
-      `;
-    }
-
-    return `
-      <label>
-        ${label}
-        <input
-          type="${inputType}"
-          id="${id}"
-          name="${id}"
-          placeholder="${placeholder}"
-          required>
-      </label>
-    `;
+function render(tabName){
+  activeTab=tabName;
+  const cfg=configs[tabName];
+  fieldsEl.innerHTML=cfg.fields.map(([id,label,type,placeholder])=>{
+    const valueAttr=type==="number"?` value="${placeholder}" min="1"`:"";
+    return `<div class="search-field"><label for="field-${id}">${label}</label><input id="field-${id}" name="${id}" type="${type}" placeholder="${placeholder}"${valueAttr} required></div>`;
   }).join("");
-
-  const todayValue = new Date().toISOString().split("T")[0];
-  travelFields.querySelectorAll('input[type="date"]').forEach(function (input) {
-    input.min = todayValue;
+  fieldsEl.querySelectorAll('input[type="date"]').forEach(el=>el.min=today());
+  helper.textContent=cfg.helper;
+  flightModes.style.display=tabName==="Flights"?"flex":"none";
+  specialRow.style.display=tabName==="Flights"?"flex":"none";
+  tabs.forEach(t=>{
+    const active=t.getAttribute("data-tab")===tabName;
+    t.classList.toggle("active",active);
+    if(t.classList.contains("nav-service")) t.setAttribute("aria-current",active?"page":"false");
+    if(t.classList.contains("booking-tab")) t.setAttribute("aria-selected",active?"true":"false");
   });
 }
-
-tabs.forEach(function (tab) {
-  tab.addEventListener("click", function () {
-    tabs.forEach(function (item) {
-      item.classList.remove("active");
-    });
-
-    tab.classList.add("active");
-
-    const type = tab.getAttribute("data-type");
-    travelType.value = type;
-    renderTravelFields(type);
-  });
-});
-
-renderTravelFields("Flight");
-
-
-/* =========================================
-   ENQUIRY FORM
-========================================= */
-
-const travelForm = document.getElementById("travelForm");
-
-travelForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const type = travelType.value;
-  const formData = new FormData(travelForm);
-  const lines = [
-    "Hello Tripora,",
-    "",
-    `I want ${type.toLowerCase()} booking assistance.`,
-    ""
-  ];
-
-  for (const [key, value] of formData.entries()) {
-    if (key === "travelType" || !value) continue;
-
-    const label = key
-      .replace(/([A-Z])/g, " $1")
-      .replace(/^./, function (c) { return c.toUpperCase(); });
-
-    lines.push(`${label}: ${value}`);
+function selectTab(tabName,scroll=true){
+  render(tabName);
+  if(scroll && window.innerWidth<900){
+    document.getElementById("booking").scrollIntoView({behavior:"smooth",block:"start"});
   }
-
-  lines.push("", "Please help me with the available options.");
-
-  window.open(
-    WHATSAPP_URL + "?text=" + encodeURIComponent(lines.join("\n")),
-    "_blank"
-  );
-});
-
-
-/* =========================================
-   TESTIMONIAL SLIDER
-========================================= */
-
-const track =
-  document.getElementById("testimonialTrack");
-
-const dots =
-  document.querySelectorAll(".dot");
-
-let currentSlide = 0;
-
-
-function showSlide(index) {
-
-  if (index < 0) {
-    index = 2;
-  }
-
-  if (index > 2) {
-    index = 0;
-  }
-
-  currentSlide = index;
-
-
-  track.style.transform =
-    "translateX(-" +
-    (index * 100) +
-    "%)";
-
-
-  dots.forEach(function (dot, i) {
-
-    dot.classList.toggle(
-      "active",
-      i === index
-    );
-
-  });
-
 }
+tabs.forEach(t=>t.addEventListener("click",()=>selectTab(t.getAttribute("data-tab"),t.classList.contains("nav-service"))));
 
+document.getElementById("searchForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const data=new FormData(e.currentTarget);
+  const lines=["Hello Tripora,","",`I want ${activeTab} booking assistance.`,""];
+  const flightMode=document.querySelector('input[name="flightMode"]:checked');
+  if(activeTab==="Flights" && flightMode) lines.push("Trip Type: "+flightMode.value);
+  for(const [key,val] of data.entries()){
+    if(!val || key==="student"||key==="senior"||key==="armed"||key==="doctor") continue;
+    const label=key.replace(/([A-Z])/g," $1").replace(/^./,c=>c.toUpperCase());
+    lines.push(`${label}: ${val}`);
+  }
+  const fares=[];
+  ["student","senior","armed","doctor"].forEach(k=>{const el=document.querySelector(`input[name="${k}"]`);if(el&&el.checked)fares.push(el.value)});
+  if(fares.length) lines.push("Special Fares: "+fares.join(", "));
+  lines.push("","Please share the available options and booking details.");
+  window.open(WHATSAPP_URL+"?text="+encodeURIComponent(lines.join("\n")),"_blank");
+});
 
-dots.forEach(function (dot) {
-
-  dot.addEventListener("click", function () {
-
-    showSlide(
-      Number(
-        dot.getAttribute("data-slide")
-      )
-    );
-
+document.querySelectorAll("[data-message]").forEach(btn=>{
+  btn.addEventListener("click",e=>{
+    e.preventDefault();
+    const message=btn.getAttribute("data-message");
+    window.open(WHATSAPP_URL+"?text="+encodeURIComponent(message),"_blank");
   });
-
 });
 
-
-/* Auto slider */
-
-setInterval(function () {
-
-  showSlide(currentSlide + 1);
-
-}, 5000);
-
-
-/* =========================================
-   DATE MINIMUM
-========================================= */
-
-const dateInput =
-  document.getElementById("travelDate");
-
-const today =
-  new Date()
-    .toISOString()
-    .split("T")[0];
-
-dateInput.min = today;
-
-
-/* =========================================
-   SCROLL REVEAL
-========================================= */
-
-const revealElements =
-  document.querySelectorAll(
-    ".service-card, .feature, .destination-card, .about-image, .about-content, .testimonial, .enquiry-box"
-  );
-
-
-const revealObserver =
-  new IntersectionObserver(
-
-    function (entries) {
-
-      entries.forEach(function (entry) {
-
-        if (entry.isIntersecting) {
-
-          entry.target.style.opacity = "1";
-
-          entry.target.style.transform =
-            "translateY(0)";
-
-          revealObserver.unobserve(
-            entry.target
-          );
-
-        }
-
-      });
-
-    },
-
-    {
-      threshold: 0.12
-    }
-
-  );
-
-
-revealElements.forEach(function (element) {
-
-  element.style.opacity = "0";
-
-  element.style.transform =
-    "translateY(30px)";
-
-  element.style.transition =
-    "opacity .8s ease, transform .8s ease";
-
-  revealObserver.observe(element);
-
-});
-
-
-/* =========================================
-   SMOOTH NAVIGATION
-========================================= */
-
-document.querySelectorAll(
-  'a[href^="#"]'
-).forEach(function (link) {
-
-  link.addEventListener("click", function (event) {
-
-    const target =
-      document.querySelector(
-        link.getAttribute("href")
-      );
-
-    if (!target) return;
-
-    event.preventDefault();
-
-    target.scrollIntoView({
-      behavior: "smooth"
-    });
-
+document.querySelectorAll("[data-jump]").forEach(link=>{
+  link.addEventListener("click",()=>{
+    const tab=link.getAttribute("data-jump");
+    selectTab(tab,false);
   });
-
 });
 
-
-/* =========================================
-   PREVENT EMPTY SOCIAL LINKS
-========================================= */
-
-document.querySelectorAll(
-  ".social-icons a"
-).forEach(function (link) {
-
-  link.addEventListener("click", function (event) {
-
-    if (link.getAttribute("href") === "#") {
-
-      event.preventDefault();
-
-    }
-
-  });
-
+const menuBtn=document.getElementById("menuBtn");
+const nav=document.getElementById("primaryNav");
+menuBtn?.addEventListener("click",()=>{
+  const open=nav.classList.toggle("open");
+  document.body.classList.toggle("menu-open",open);
+  menuBtn.setAttribute("aria-expanded",open?"true":"false");
 });
+document.querySelectorAll(".nav-service").forEach(btn=>btn.addEventListener("click",()=>nav.classList.remove("open")));
+
+document.querySelectorAll(".social-row a[href='#']").forEach(a=>a.addEventListener("click",e=>e.preventDefault()));
+
+render("Flights");
