@@ -1514,3 +1514,69 @@ footer {
 /* Clickable service surfaces */
 .service-chip, .service-card { cursor: pointer; }
 .service-chip:focus-visible, .service-card:focus-visible { outline: 2px solid #69e5ff; outline-offset: 4px; }
+
+
+/* ================= SERVICE BOOKING MODAL ================= */
+.service-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.service-modal.open { display: flex; }
+.service-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.78);
+  backdrop-filter: blur(8px);
+}
+.service-modal-panel {
+  position: relative;
+  z-index: 2;
+  width: min(560px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 32px;
+  border: 1px solid rgba(105,229,255,.22);
+  border-radius: 24px;
+  background: linear-gradient(145deg, #0b1a2b, #030a14);
+  box-shadow: 0 30px 100px rgba(0,0,0,.55);
+}
+.service-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  color: white;
+  font-size: 24px;
+}
+.service-modal-kicker {
+  color: #69e5ff;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+.service-modal-panel h2 {
+  margin: 12px 0 8px;
+  font-family: "Manrope", sans-serif;
+  font-size: 2rem;
+}
+.service-modal-panel > p { color: #91a3b6; margin-bottom: 22px; }
+.service-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.service-fields label { display: block; }
+.service-modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+.service-modal-actions .btn { flex: 1; }
+.service-modal-note { display: block; margin-top: 16px; color: #718398; line-height: 1.5; }
+.modal-open { overflow: hidden; }
+@media (max-width: 600px) {
+  .service-modal-panel { padding: 25px 20px; }
+  .service-fields { grid-template-columns: 1fr; }
+  .service-modal-actions { flex-direction: column; }
+}
