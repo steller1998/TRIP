@@ -457,7 +457,7 @@
                 <button
                     class="text-button"
                     type="button"
-                    data-message="Hello Tripora, I want to book a flight.">
+                    data-service="Flight Booking">
 
                     Book Now ↗
 
@@ -488,7 +488,7 @@
                 <button
                     class="text-button"
                     type="button"
-                    data-message="Hello Tripora, I need train booking assistance.">
+                    data-service="Train Booking">
 
                     Book Now ↗
 
@@ -519,7 +519,7 @@
                 <button
                     class="text-button"
                     type="button"
-                    data-message="Hello Tripora, I need hotel booking assistance.">
+                    data-service="Hotel Booking">
 
                     Book Now ↗
 
@@ -550,7 +550,7 @@
                 <button
                     class="text-button"
                     type="button"
-                    data-message="Hello Tripora, I want to know about holiday packages.">
+                    data-service="Holiday Packages">
 
                     Explore ↗
 
@@ -1521,6 +1521,26 @@
 
 </a>
 
+
+
+<!-- ================= SERVICE BOOKING MODAL ================= -->
+<div class="service-modal" id="serviceModal" aria-hidden="true">
+  <div class="service-modal-backdrop" data-close-service></div>
+  <div class="service-modal-panel" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+    <button class="service-modal-close" type="button" aria-label="Close" data-close-service>×</button>
+    <div class="service-modal-kicker">TRIPORA / BOOKING DESK</div>
+    <h2 id="serviceModalTitle">Book your service</h2>
+    <p id="serviceModalIntro">Tell us what you need and we will help you with the available options.</p>
+    <form id="serviceBookingForm">
+      <div id="serviceFields" class="service-fields"></div>
+      <div class="service-modal-actions">
+        <button class="btn primary" type="submit">Continue on WhatsApp ↗</button>
+        <button class="btn secondary" type="button" data-close-service>Cancel</button>
+      </div>
+    </form>
+    <small class="service-modal-note">Live flight/hotel prices will be shown here after Tripora's supplier API is connected. For now, your request is sent directly to the Tripora travel desk.</small>
+  </div>
+</div>
 
 <!-- ================= JAVASCRIPT ================= -->
 
