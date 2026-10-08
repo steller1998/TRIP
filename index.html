@@ -233,19 +233,24 @@
     class="navbar"
     id="navbar">
 
-    <a
-        href="#home"
-        class="logo"
-        aria-label="Tripora Home">
-
-        <img
-            src="./assets/tripora-logo.png"
-            alt="Tripora"
-            class="logo-image"
-            width="62"
-            height="62"
-            decoding="async">
-
+    <a href="#home" class="logo" aria-label="Tripora Home">
+        <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 56 56" role="img">
+                <defs>
+                    <linearGradient id="triporaMarkGradient" x1="8" y1="8" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#8FE7D8"/>
+                        <stop offset="1" stop-color="#4CA7FF"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="28" cy="28" r="24" fill="url(#triporaMarkGradient)"/>
+                <path d="M16 18h24v6h-9v15h-6V24h-9z" fill="#06101F"/>
+                <path d="M11 39c5.3 4.7 11.2 7 17 7 7.4 0 14-3.1 18.5-8.1" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" opacity=".9"/>
+            </svg>
+        </span>
+        <span class="brand-copy">
+            <strong>TRIPORA</strong>
+            <small>TRAVEL • BEYOND BOUNDARIES</small>
+        </span>
     </a>
 
 
@@ -309,9 +314,8 @@
             preload="metadata"
             aria-hidden="true">
 
-            <source
-                src="./hero-video.mp4"
-                type="video/mp4">
+            <source src="./hero-video.mp4" type="video/mp4">
+            <track kind="captions" srclang="en" label="Tripora hero">
 
         </video>
 
@@ -437,10 +441,8 @@
 
             <article class="service-card" data-service="Flight Booking" role="button" tabindex="0">
 
-                <div
-                    class="service-icon"
-                    aria-hidden="true">
-                    ✈️
+                <div class="service-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M3 13.5 21 4.8l-2.2 4.5-5.6 3.2 2.4 4.7-2.7 1.1-3.5-4.2-3.7 2.1-2.7-2.7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
 
                 <small>01</small>
@@ -468,10 +470,8 @@
 
             <article class="service-card" data-service="Train Booking" role="button" tabindex="0">
 
-                <div
-                    class="service-icon"
-                    aria-hidden="true">
-                    🚆
+                <div class="service-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 13h10M8 20l2-3m6 3-2-3M8 8h.01M16 8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
                 </div>
 
                 <small>02</small>
@@ -499,10 +499,8 @@
 
             <article class="service-card" data-service="Hotel Booking" role="button" tabindex="0">
 
-                <div
-                    class="service-icon"
-                    aria-hidden="true">
-                    🏨
+                <div class="service-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M4 20V7.5a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 20 7.5V20M4 13h16M8 13V9h4v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
 
                 <small>03</small>
@@ -530,10 +528,8 @@
 
             <article class="service-card" data-service="Holiday Packages" role="button" tabindex="0">
 
-                <div
-                    class="service-icon"
-                    aria-hidden="true">
-                    🌴
+                <div class="service-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M6 20c1.4-5 2.9-8.8 6-12 3.1 3.2 4.6 7 6 12M12 8V3M12 6c-2.3-1.5-4.2-1.6-5.7-.8C7.2 7.3 9 8 12 8Zm0-2c2.3-1.5 4.2-1.6 5.7-.8C16.8 7.3 15 8 12 8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
 
                 <small>04</small>
@@ -1346,8 +1342,14 @@
 
         <div>
 
-            <div class="footer-logo">
-                ✈ TRIPORA
+            <div class="footer-logo footer-brand">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="24" fill="currentColor" opacity=".14"/><path d="M16 18h24v6h-9v15h-6V24h-9z" fill="currentColor"/><path d="M11 39c5.3 4.7 11.2 7 17 7 7.4 0 14-3.1 18.5-8.1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                </span>
+                <span>
+                    <strong>TRIPORA</strong>
+                    <small>Travel Beyond Boundaries</small>
+                </span>
             </div>
 
             <p>
@@ -1488,7 +1490,7 @@
 
 <!-- ================= JAVASCRIPT ================= -->
 
-<script src="script.js?v=20260926-1"></script>
+<script src="script.js?v=20260926-2"></script>
 
 </body>
 </html>
