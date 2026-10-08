@@ -3,22 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tripora – Flights, Hotels, Trains & Holidays</title>
-<meta name="description" content="Tripora helps you book flights, hotels, trains, holidays, buses, cabs and travel experiences with personal assistance on WhatsApp.">
-<meta name="keywords" content="Tripora, flight booking, hotel booking, train booking, bus booking, cab booking, holiday packages, travel agency India">
+<title>Tripora – Flights, Hotels, Trains, Holidays & More</title>
+<meta name="description" content="Tripora makes travel booking simple with flights, hotels, homestays, holidays, trains, buses, cabs, activities, visa help and travel assistance.">
+<meta name="keywords" content="Tripora, flight booking, hotel booking, holiday packages, train booking, bus booking, cab booking, visa assistance, travel agency India">
 <meta name="author" content="Tripora">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://steller1998.github.io/TRIP/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Tripora – Travel Booking Made Simple">
-<meta property="og:description" content="Flights, hotels, trains, holidays and more with Tripora.">
+<meta property="og:title" content="Tripora – Travel Beyond Boundaries">
+<meta property="og:description" content="Flights, stays, trains, holidays and more with Tripora.">
 <meta property="og:url" content="https://steller1998.github.io/TRIP/">
-<meta property="og:image" content="https://steller1998.github.io/TRIP/assets/kashmir.jpg">
+<meta property="og:image" content="https://steller1998.github.io/TRIP/assets/goa.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260928-1">
-
+<link rel="stylesheet" href="style.css?v=20261008-2">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -26,9 +25,9 @@
   "name":"Tripora",
   "url":"https://steller1998.github.io/TRIP/",
   "telephone":"+919181565815",
-  "description":"Tripora provides flight booking, hotel booking, train booking, bus booking, cab booking, holiday packages and travel assistance.",
+  "description":"Tripora provides flight booking, hotel booking, train booking, bus booking, cab booking, holidays, activities and travel assistance.",
   "areaServed":{"@type":"Country","name":"India"},
-  "serviceType":["Flight Booking","Hotel Booking","Train Booking","Bus Booking","Cab Booking","Holiday Packages","Travel Assistance"]
+  "serviceType":["Flight Booking","Hotel Booking","Homestays","Holiday Packages","Train Booking","Bus Booking","Cab Booking","Tours & Attractions","Visa Assistance","Cruise","Forex Assistance","Travel Insurance"]
 }
 </script>
 </head>
@@ -38,15 +37,16 @@
   <div class="utility-bar">
     <div class="container utility-inner">
       <div class="utility-left">
-        <span>Travel made simpler with Tripora</span>
-        <a href="#offers">Special Offers</a>
-        <a href="#destinations">Popular Destinations</a>
+        <span>Tripora Travel Desk</span>
+        <a href="#offers">Offers</a>
+        <a href="#popular">Popular Destinations</a>
+        <a href="#why">Why Tripora</a>
       </div>
       <div class="utility-right">
-        <a href="#contact">My Trips</a>
-        <a href="#contact">Wishlist</a>
-        <button type="button" class="text-link" data-message="Hello Tripora, I need help with a booking.">Help</button>
-        <span class="lang">INR&nbsp; | &nbsp;English</span>
+        <button class="utility-btn" type="button" data-action="trips">My Trips</button>
+        <button class="utility-btn" type="button" data-action="wishlist">Wishlist</button>
+        <button class="utility-btn" type="button" data-message="Hello Tripora, I need help with a booking.">Help</button>
+        <span>INR&nbsp; | &nbsp;English</span>
       </div>
     </div>
   </div>
@@ -56,16 +56,16 @@
       <a href="#home" class="brand" aria-label="Tripora Home">
         <span class="brand-mark">
           <svg viewBox="0 0 52 52" aria-hidden="true">
-            <defs><linearGradient id="tg" x1="6" y1="6" x2="46" y2="46"><stop stop-color="#ff5e66"/><stop offset="1" stop-color="#ef3340"/></linearGradient></defs>
-            <circle cx="26" cy="26" r="24" fill="url(#tg)"/>
+            <defs><linearGradient id="triporaLogoGradient" x1="8" y1="8" x2="44" y2="44"><stop stop-color="#ff626b"/><stop offset="1" stop-color="#e72538"/></linearGradient></defs>
+            <circle cx="26" cy="26" r="24" fill="url(#triporaLogoGradient)"/>
             <path d="M14 17h24v6h-9v14h-6V23h-9z" fill="#fff"/>
-            <path d="M12 39c4.6 3.4 9.4 5.1 14 5.1 6.3 0 11.7-2.1 16.1-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+            <path d="M12 39c4.6 3.4 9.4 5.1 14 5.1 6.3 0 11.7-2.1 16.1-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </span>
         <span class="brand-text"><strong>TRIPORA</strong><small>Travel Beyond Boundaries</small></span>
       </a>
 
-      <nav class="primary-nav" aria-label="Travel categories" id="primaryNav">
+      <nav class="primary-nav" id="primaryNav" aria-label="Travel services">
         <button class="nav-service active" type="button" data-tab="Flights"><span class="nav-icon">✈</span><span>Flights</span></button>
         <button class="nav-service" type="button" data-tab="Hotels"><span class="nav-icon">▣</span><span>Hotels</span></button>
         <button class="nav-service" type="button" data-tab="Homestays"><span class="nav-icon">⌂</span><span>Homestays</span></button>
@@ -75,9 +75,12 @@
         <button class="nav-service" type="button" data-tab="Cabs"><span class="nav-icon">▱</span><span>Cabs</span></button>
         <button class="nav-service" type="button" data-tab="Tours"><span class="nav-icon">✦</span><span>Activities</span></button>
         <button class="nav-service" type="button" data-tab="Visa"><span class="nav-icon">▣</span><span>Visa</span></button>
+        <button class="nav-service" type="button" data-tab="Cruise"><span class="nav-icon">◇</span><span>Cruise</span></button>
+        <button class="nav-service" type="button" data-tab="Forex"><span class="nav-icon">₹</span><span>Forex</span></button>
+        <button class="nav-service" type="button" data-tab="Insurance"><span class="nav-icon">✓</span><span>Insurance</span></button>
       </nav>
 
-      <a class="login-btn" href="#contact">Login / Sign up</a>
+      <button class="login-btn" type="button" data-action="login">Login / Sign up</button>
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -89,65 +92,76 @@
   <div class="hero-banner">
     <div class="container hero-banner-inner">
       <div class="hero-copy">
-        <span class="hero-eyebrow">TRIPORA TRAVEL DESK</span>
-        <h1>Book your next<br><span>journey with ease.</span></h1>
-        <p>Flights, hotels, trains, holidays and more — one simple place to plan your trip.</p>
-        <div class="hero-trust">
-          <span>✓ Personal travel assistance</span>
+        <span class="hero-eyebrow">TRAVEL BEYOND BOUNDARIES</span>
+        <h1>Plan your trip.<br><span>We make it simple.</span></h1>
+        <p>Search flights, stays, trains, holidays and more — then connect with Tripora for the next step.</p>
+        <div class="hero-points">
+          <span>✓ Human travel assistance</span>
           <span>✓ WhatsApp support</span>
           <span>✓ Domestic & international</span>
         </div>
       </div>
       <div class="hero-visual">
-        <img src="assets/dubai.jpg" alt="Travel destination" loading="eager">
-        <div class="floating-stat"><strong>Travel smarter</strong><span>Plan • Compare • Book</span></div>
+        <img src="assets/goa.jpg" alt="Travel destination" loading="eager">
+        <div class="floating-card"><strong>Tripora Travel Desk</strong><span>Plan • Compare • Book</span></div>
       </div>
     </div>
   </div>
 
-  <div class="container search-wrap" id="booking">
+  <div class="container booking-wrap" id="booking">
     <div class="booking-card">
       <div class="booking-tabs" id="bookingTabs">
-        <button type="button" class="booking-tab active" data-tab="Flights"><span>✈</span> Flights</button>
-        <button type="button" class="booking-tab" data-tab="Hotels"><span>▣</span> Hotels</button>
-        <button type="button" class="booking-tab" data-tab="Homestays"><span>⌂</span> Homestays</button>
-        <button type="button" class="booking-tab" data-tab="Holidays"><span>◒</span> Holiday Packages</button>
-        <button type="button" class="booking-tab" data-tab="Trains"><span>▤</span> Trains</button>
-        <button type="button" class="booking-tab" data-tab="Buses"><span>▥</span> Buses</button>
-        <button type="button" class="booking-tab" data-tab="Cabs"><span>▱</span> Cabs</button>
-        <button type="button" class="booking-tab" data-tab="Tours"><span>✦</span> Tours & Attractions</button>
-        <button type="button" class="booking-tab" data-tab="Visa"><span>▣</span> Visa</button>
+        <button type="button" class="booking-tab active" data-tab="Flights"><span>✈</span>Flights</button>
+        <button type="button" class="booking-tab" data-tab="Hotels"><span>▣</span>Hotels</button>
+        <button type="button" class="booking-tab" data-tab="Homestays"><span>⌂</span>Homestays</button>
+        <button type="button" class="booking-tab" data-tab="Holidays"><span>◒</span>Holiday Packages</button>
+        <button type="button" class="booking-tab" data-tab="Trains"><span>▤</span>Trains</button>
+        <button type="button" class="booking-tab" data-tab="Buses"><span>▥</span>Buses</button>
+        <button type="button" class="booking-tab" data-tab="Cabs"><span>▱</span>Cabs</button>
+        <button type="button" class="booking-tab" data-tab="Tours"><span>✦</span>Activities</button>
+        <button type="button" class="booking-tab" data-tab="Visa"><span>▣</span>Visa</button>
       </div>
 
-      <div class="trip-toggle" id="flightModes">
-        <label><input type="radio" name="flightMode" value="One Way" checked> <span>One Way</span></label>
-        <label><input type="radio" name="flightMode" value="Round Trip"> <span>Round Trip</span></label>
-        <label><input type="radio" name="flightMode" value="Multi City"> <span>Multi City</span></label>
+      <div class="flight-controls">
+        <div class="trip-toggle" id="flightModes">
+          <label><input type="radio" name="flightMode" value="One Way" checked><span>One Way</span></label>
+          <label><input type="radio" name="flightMode" value="Round Trip"><span>Round Trip</span></label>
+          <label><input type="radio" name="flightMode" value="Multi City"><span>Multi City</span></label>
+        </div>
+        <button class="helper-link" type="button" data-message="Hello Tripora, please help me compare travel options and fares.">Compare options</button>
       </div>
 
       <div class="book-helper" id="bookHelper">Book domestic and international flights with Tripora.</div>
 
       <form id="searchForm">
         <div class="search-fields" id="dynamicFields"></div>
-        <div class="special-row" id="specialRow">
-          <span class="special-title">Special fares</span>
-          <label><input type="checkbox" name="student" value="Student"> Student</label>
-          <label><input type="checkbox" name="senior" value="Senior Citizen"> Senior Citizen</label>
-          <label><input type="checkbox" name="armed" value="Armed Forces"> Armed Forces</label>
-          <label><input type="checkbox" name="doctor" value="Doctor / Nurse"> Doctor / Nurse</label>
+
+        <div class="special-fare-box" id="specialFareBox">
+          <div class="special-fare-title">Select a special fare</div>
+          <label class="fare-option active"><input type="radio" name="specialFare" value="Regular" checked><span><strong>Regular</strong><small>Standard fare</small></span></label>
+          <label class="fare-option"><input type="radio" name="specialFare" value="Student"><span><strong>Student</strong><small>Extra savings</small></span></label>
+          <label class="fare-option"><input type="radio" name="specialFare" value="Armed Forces"><span><strong>Armed Forces</strong><small>Eligible travellers</small></span></label>
+          <label class="fare-option"><input type="radio" name="specialFare" value="Senior Citizen"><span><strong>Senior Citizen</strong><small>Eligible travellers</small></span></label>
         </div>
+
         <div class="search-actions">
           <button class="search-btn" type="submit">SEARCH <span>→</span></button>
         </div>
       </form>
+
+      <div class="booking-tools">
+        <button type="button" data-message="Hello Tripora, I want to check my flight status or track a flight."><strong>Flight Tracker</strong><small>Check flight status</small></button>
+        <button type="button" data-message="Hello Tripora, I want help checking a train PNR status."><strong>PNR Status</strong><small>Train enquiry</small></button>
+        <button type="button" data-message="Hello Tripora, I want to know about current fares and fare calendar options."><strong>Fare Calendar</strong><small>Find better dates</small></button>
+        <button type="button" data-message="Hello Tripora, please share your latest travel offers."><strong>Offers</strong><small>Deals & savings</small></button>
+      </div>
     </div>
 
-    <div class="quick-strip">
-      <button type="button" data-message="Hello Tripora, I want help planning a trip."><span class="strip-icon">◉</span> Trip Ideas</button>
-      <button type="button" data-message="Hello Tripora, please share your current travel offers."><span class="strip-icon">%</span> Travel Offers</button>
-      <button type="button" data-message="Hello Tripora, I want international travel assistance."><span class="strip-icon">◎</span> International Travel</button>
-      <button type="button" data-message="Hello Tripora, I need travel planning assistance."><span class="strip-icon">✦</span> Travel Assistance</button>
-      <button type="button" data-message="Hello Tripora, I want to discuss a custom trip."><span class="strip-icon">⌁</span> Custom Trip</button>
+    <div class="extra-services">
+      <button type="button" data-tab="Cruise"><span>◇</span><strong>Cruise</strong><small>Plan a cruise holiday</small></button>
+      <button type="button" data-tab="Forex"><span>₹</span><strong>Forex Card & Currency</strong><small>Travel money assistance</small></button>
+      <button type="button" data-tab="Insurance"><span>✓</span><strong>Travel Insurance</strong><small>Protect your journey</small></button>
+      <button type="button" data-message="Hello Tripora, I want a custom travel plan for my trip."><span>✦</span><strong>Custom Trip</strong><small>Personalised itinerary</small></button>
     </div>
   </div>
 </section>
@@ -155,25 +169,25 @@
 <section class="section light-section" id="offers">
   <div class="container">
     <div class="section-head">
-      <div><span class="section-kicker">EXCLUSIVE OFFERS</span><h2>Deals made for your <span>next trip.</span></h2></div>
-      <button class="outline-btn" type="button" data-message="Hello Tripora, please share all current offers.">VIEW ALL →</button>
+      <div><span class="section-kicker">TRIPORA OFFERS</span><h2>Deals for your <span>next journey.</span></h2></div>
+      <button class="outline-btn" type="button" data-message="Hello Tripora, please send me all current offers.">VIEW ALL →</button>
     </div>
     <div class="offer-grid">
-      <article class="offer-card"><div class="offer-image"><img src="assets/goa.jpg" alt="Goa"></div><div class="offer-copy"><small>HOLIDAYS</small><h3>Goa escapes</h3><p>Beach breaks, stays and experiences.</p><button type="button" data-message="Hello Tripora, I want a Goa holiday offer.">EXPLORE →</button></div></article>
-      <article class="offer-card"><div class="offer-image"><img src="assets/manali.jpg" alt="Manali"></div><div class="offer-copy"><small>HILL GETAWAYS</small><h3>Manali breaks</h3><p>Cool weather, stays and mountain views.</p><button type="button" data-message="Hello Tripora, I want a Manali holiday offer.">EXPLORE →</button></div></article>
-      <article class="offer-card"><div class="offer-image"><img src="assets/dubai.jpg" alt="Dubai"></div><div class="offer-copy"><small>INTERNATIONAL</small><h3>Dubai holidays</h3><p>City, shopping and desert adventures.</p><button type="button" data-message="Hello Tripora, I want a Dubai holiday offer.">EXPLORE →</button></div></article>
-      <article class="offer-card"><div class="offer-image"><img src="assets/kashmir.jpg" alt="Kashmir"></div><div class="offer-copy"><small>SCENIC INDIA</small><h3>Kashmir journeys</h3><p>Valleys, stays and curated experiences.</p><button type="button" data-message="Hello Tripora, I want a Kashmir holiday offer.">EXPLORE →</button></div></article>
+      <article class="offer-card"><div class="offer-image"><img src="assets/goa.jpg" alt="Goa"></div><div class="offer-copy"><small>HOLIDAYS</small><h3>Goa escapes</h3><p>Beach stays, local experiences and easy planning.</p><button type="button" data-message="Hello Tripora, I want a Goa holiday offer.">EXPLORE →</button></div></article>
+      <article class="offer-card"><div class="offer-image"><img src="assets/manali.jpg" alt="Manali"></div><div class="offer-copy"><small>HILL GETAWAYS</small><h3>Manali breaks</h3><p>Mountain stays, sightseeing and adventure planning.</p><button type="button" data-message="Hello Tripora, I want a Manali holiday offer.">EXPLORE →</button></div></article>
+      <article class="offer-card"><div class="offer-image"><img src="assets/dubai.jpg" alt="Dubai"></div><div class="offer-copy"><small>INTERNATIONAL</small><h3>Dubai holidays</h3><p>City escapes, stays and desert experiences.</p><button type="button" data-message="Hello Tripora, I want a Dubai holiday offer.">EXPLORE →</button></div></article>
+      <article class="offer-card"><div class="offer-image"><img src="assets/kashmir.jpg" alt="Kashmir"></div><div class="offer-copy"><small>SCENIC INDIA</small><h3>Kashmir journeys</h3><p>Scenic stays, sightseeing and holiday support.</p><button type="button" data-message="Hello Tripora, I want a Kashmir holiday offer.">EXPLORE →</button></div></article>
     </div>
   </div>
 </section>
 
-<section class="section soft-section">
+<section class="section soft-section" id="popular">
   <div class="container">
     <div class="section-head">
-      <div><span class="section-kicker">POPULAR RIGHT NOW</span><h2>Where travellers are <span>going next.</span></h2></div>
-      <a class="outline-btn link-btn" href="#destinations">EXPLORE ALL →</a>
+      <div><span class="section-kicker">POPULAR DESTINATIONS</span><h2>Where travellers are <span>going next.</span></h2></div>
+      <button class="outline-btn" type="button" data-message="Hello Tripora, please share popular destination packages.">EXPLORE ALL →</button>
     </div>
-    <div class="destination-grid" id="destinations">
+    <div class="destination-grid">
       <button class="destination-card" type="button" data-message="Hello Tripora, I want to plan a trip to Delhi."><img src="assets/delhi.jpg" alt="Delhi"><span><small>INDIA</small><strong>Delhi</strong><em>Culture • Food • City breaks</em></span></button>
       <button class="destination-card" type="button" data-message="Hello Tripora, I want to plan a trip to Mumbai."><img src="assets/mumbai.jpg" alt="Mumbai"><span><small>INDIA</small><strong>Mumbai</strong><em>Sea • Food • City life</em></span></button>
       <button class="destination-card" type="button" data-message="Hello Tripora, I want to plan a trip to Goa."><img src="assets/goa.jpg" alt="Goa"><span><small>INDIA</small><strong>Goa</strong><em>Beaches • Stays • Nightlife</em></span></button>
@@ -186,12 +200,12 @@
 
 <section class="section white-section">
   <div class="container">
-    <div class="section-head"><div><span class="section-kicker">WHY TRIPORA</span><h2>A travel desk that feels <span>personal.</span></h2></div></div>
+    <div class="section-head"><div><span class="section-kicker">WHY TRIPORA</span><h2>A booking experience that feels <span>simple.</span></h2></div></div>
     <div class="feature-grid">
-      <article><span class="feature-icon">24</span><h3>Travel assistance</h3><p>Get human help before and after you decide what to book.</p></article>
-      <article><span class="feature-icon">✓</span><h3>Simple enquiries</h3><p>Tell us what you need and we connect you with the right option.</p></article>
-      <article><span class="feature-icon">↗</span><h3>Wide travel range</h3><p>Flights, hotels, trains, holidays, buses, cabs and more.</p></article>
-      <article><span class="feature-icon">◉</span><h3>WhatsApp-first support</h3><p>Fast communication on the channel you already use every day.</p></article>
+      <article><span class="feature-icon">24</span><h3>Travel assistance</h3><p>Human help for planning, enquiries and booking decisions.</p></article>
+      <article><span class="feature-icon">✓</span><h3>Service-specific forms</h3><p>Flights, hotels, trains, buses, cabs and holidays each ask for the right details.</p></article>
+      <article><span class="feature-icon">↗</span><h3>Many travel services</h3><p>One Tripora desk for travel planning across multiple categories.</p></article>
+      <article><span class="feature-icon">◉</span><h3>WhatsApp-first support</h3><p>Your enquiry goes straight to the Tripora travel desk on WhatsApp.</p></article>
     </div>
   </div>
 </section>
@@ -199,13 +213,40 @@
 <section class="section white-section" id="about">
   <div class="container split-section">
     <div class="split-image"><img src="assets/kashmir.jpg" alt="Tripora travel"></div>
-    <div class="split-copy"><span class="section-kicker">ABOUT TRIPORA</span><h2>One place for <span>every journey.</span></h2><p>Tripora is built to make travel planning less confusing. Choose a service, tell us your travel details and our team helps with the next step.</p><div class="check-list"><span>✓ Flight booking assistance</span><span>✓ Hotel and stay options</span><span>✓ Train, bus and cab enquiries</span><span>✓ Holiday packages and custom trips</span></div><button class="primary-btn" type="button" data-message="Hello Tripora, I want to discuss my travel requirements.">Talk to Tripora →</button></div>
+    <div class="split-copy">
+      <span class="section-kicker">ABOUT TRIPORA</span>
+      <h2>One place for <span>every journey.</span></h2>
+      <p>Tripora brings together travel planning, booking assistance and personalised support in one clean experience.</p>
+      <div class="check-list">
+        <span>✓ Flight & hotel assistance</span>
+        <span>✓ Train, bus & cab enquiries</span>
+        <span>✓ Holiday packages & custom trips</span>
+        <span>✓ Visa, forex & travel support</span>
+      </div>
+      <button class="primary-btn" type="button" data-message="Hello Tripora, I want to discuss my travel requirements.">Talk to Tripora →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section route-section">
+  <div class="container">
+    <div class="section-head"><div><span class="section-kicker">POPULAR SEARCHES</span><h2>Useful travel <span>shortcuts.</span></h2></div></div>
+    <div class="chip-grid">
+      <button type="button" data-message="Hello Tripora, I need a Delhi to Goa flight.">Delhi → Goa Flights</button>
+      <button type="button" data-message="Hello Tripora, I need a Delhi to Mumbai flight.">Delhi → Mumbai Flights</button>
+      <button type="button" data-message="Hello Tripora, I need a Delhi to Dubai flight.">Delhi → Dubai Flights</button>
+      <button type="button" data-message="Hello Tripora, I need hotels in Goa.">Hotels in Goa</button>
+      <button type="button" data-message="Hello Tripora, I need hotels in Rishikesh.">Hotels in Rishikesh</button>
+      <button type="button" data-message="Hello Tripora, I want a Kashmir holiday package.">Kashmir Packages</button>
+      <button type="button" data-message="Hello Tripora, I want a Goa holiday package.">Goa Packages</button>
+      <button type="button" data-message="Hello Tripora, I want a Dubai holiday package.">Dubai Packages</button>
+    </div>
   </div>
 </section>
 
 <section class="section promo-section" id="contact">
   <div class="container promo-inner">
-    <div><span class="section-kicker">READY WHEN YOU ARE</span><h2>Let's plan your <span>next trip.</span></h2><p>Tell us the destination and dates. Tripora will help you take it from there.</p></div>
+    <div><span class="section-kicker">READY WHEN YOU ARE</span><h2>Let's plan your <span>next trip.</span></h2><p>Tell us where you want to go. Tripora will help you take the next step.</p></div>
     <button class="primary-btn large" type="button" data-message="Hello Tripora, I am ready to plan my next trip.">CHAT ON WHATSAPP →</button>
   </div>
 </section>
@@ -214,9 +255,12 @@
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div><a href="#home" class="footer-brand"><span class="brand-mark small"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" fill="#ef3340"/><path d="M14 17h24v6h-9v14h-6V23h-9z" fill="#fff"/><path d="M12 39c4.6 3.4 9.4 5.1 14 5.1 6.3 0 11.7-2.1 16.1-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></span><span><strong>TRIPORA</strong><small>Travel Beyond Boundaries</small></span></a><p>Flights, hotels, trains, holidays and travel assistance.</p></div>
-    <div><h4>BOOK</h4><a href="#booking" data-jump="Flights">Flights</a><a href="#booking" data-jump="Hotels">Hotels</a><a href="#booking" data-jump="Trains">Trains</a><a href="#booking" data-jump="Holidays">Holiday Packages</a></div>
-    <div><h4>EXPLORE</h4><a href="#destinations">Destinations</a><a href="#offers">Offers</a><a href="#about">About Tripora</a><a href="#contact">Contact</a></div>
+    <div>
+      <a href="#home" class="footer-brand"><span class="brand-mark small"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" fill="#ef3340"/><path d="M14 17h24v6h-9v14h-6V23h-9z" fill="#fff"/><path d="M12 39c4.6 3.4 9.4 5.1 14 5.1 6.3 0 11.7-2.1 16.1-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></span><span><strong>TRIPORA</strong><small>Travel Beyond Boundaries</small></span></a>
+      <p>Flights, stays, trains, holidays and travel assistance.</p>
+    </div>
+    <div><h4>BOOK</h4><a href="#booking" data-jump="Flights">Flights</a><a href="#booking" data-jump="Hotels">Hotels</a><a href="#booking" data-jump="Trains">Trains</a><a href="#booking" data-jump="Holidays">Holiday Packages</a><a href="#booking" data-jump="Cabs">Cabs</a></div>
+    <div><h4>EXPLORE</h4><a href="#popular">Destinations</a><a href="#offers">Offers</a><a href="#about">About Tripora</a><a href="#contact">Contact</a></div>
     <div><h4>CONTACT</h4><a href="https://wa.me/919181565815" target="_blank" rel="noopener">+91 91815 65815</a><p>WhatsApp travel assistance</p><div class="social-row"><a href="#" aria-label="Instagram">IG</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
   </div>
   <div class="container copyright">© 2026 Tripora. All rights reserved.</div>
@@ -224,6 +268,21 @@
 
 <a class="floating-wa" href="https://wa.me/919181565815?text=Hello%20Tripora%2C%20I%20need%20travel%20assistance." target="_blank" rel="noopener" aria-label="Tripora WhatsApp">⌕</a>
 
-<script src="script.js?v=20260928-1"></script>
+<div class="modal-backdrop" id="accountModal" aria-hidden="true">
+  <div class="account-modal" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+    <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
+    <span class="section-kicker">TRIPORA ACCOUNT</span>
+    <h2 id="accountTitle">Login / Sign up</h2>
+    <p>Tripora currently manages booking support directly. Enter your details and we will connect with you on WhatsApp.</p>
+    <form id="accountForm">
+      <label>Name<input name="name" type="text" placeholder="Your name" required></label>
+      <label>Mobile number<input name="phone" type="tel" placeholder="10-digit mobile number" pattern="[0-9]{10}" required></label>
+      <div class="modal-actions"><button class="primary-btn" type="submit">Continue on WhatsApp →</button><button class="secondary-btn" type="button" data-close-modal>Cancel</button></div>
+    </form>
+    <small class="modal-note">This is a WhatsApp-assisted account flow; no password is stored on this website.</small>
+  </div>
+</div>
+
+<script src="script.js?v=20261008-2"></script>
 </body>
 </html>
