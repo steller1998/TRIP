@@ -127,17 +127,25 @@ function parseCsvLine(line){
   const out=[];
   let field="";
   let quoted=false;
+
   for(let i=0;i<line.length;i++){
     const ch=line[i];
-    if(ch==="""){
-      if(quoted && line[i+1]==="""){field+=""";i++;}
-      else quoted=!quoted;
-    }else if(ch==="," && !quoted){
-      out.push(field);field="";
+
+    if(ch === '"'){
+      if(quoted && line[i+1] === '"'){
+        field += '"';
+        i++;
+      }else{
+        quoted = !quoted;
+      }
+    }else if(ch === "," && !quoted){
+      out.push(field);
+      field="";
     }else{
-      field+=ch;
+      field += ch;
     }
   }
+
   out.push(field);
   return out;
 }
