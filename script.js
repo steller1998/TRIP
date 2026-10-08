@@ -98,10 +98,45 @@ let activeTab="Flights";
 
 function today(){return new Date().toISOString().split("T")[0];}
 
+function getActiveFields(tabName){
+  if(tabName !== "Flights") return configs[tabName].fields;
+
+  const mode = document.querySelector('input[name="flightMode"]:checked')?.value || "One Way";
+  const base = [
+    ["from","From","text","Delhi / Airport"],
+    ["to","To","text","Mumbai / Dubai"],
+    ["departure","Departure","date",""]
+  ];
+
+  if(mode === "Round Trip"){
+    return [
+      ...base,
+      ["return","Return","date",""],
+      ["travellers","Travellers & Class","text","1 Traveller · Economy"]
+    ];
+  }
+
+  if(mode === "Multi City"){
+    return [
+      ...base,
+      ["nextDestination","Next Destination","text","e.g. Mumbai"],
+      ["travellers","Travellers & Class","text","1 Traveller · Economy"]
+    ];
+  }
+
+  // One Way: no Return Date field.
+  return [
+    ...base,
+    ["travellers","Travellers & Class","text","1 Traveller · Economy"]
+  ];
+}
+
 function render(tabName){
   activeTab=tabName;
   const cfg=configs[tabName];
-  fieldsEl.innerHTML=cfg.fields.map(([id,label,type,placeholder])=>{
+  const activeFields=getActiveFields(tabName);
+
+  fieldsEl.innerHTML=activeFields.map(([id,label,type,placeholder])=>{
     const valueAttr=type==="number"?` value="${placeholder}" min="1"`:"";
     return `<div class="search-field"><label for="field-${id}">${label}</label><input id="field-${id}" name="${id}" type="${type}" placeholder="${placeholder}"${valueAttr} required></div>`;
   }).join("");
@@ -153,6 +188,12 @@ document.getElementById("searchForm").addEventListener("submit",e=>{
   }
   lines.push("","Please share the available options and booking details.");
   window.open(WHATSAPP_URL+"?text="+encodeURIComponent(lines.join("\n")),"_blank");
+});
+
+document.querySelectorAll('input[name="flightMode"]').forEach(input=>{
+  input.addEventListener("change",()=>{
+    render("Flights");
+  });
 });
 
 document.querySelectorAll(".fare-option input").forEach(input=>{
