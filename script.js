@@ -308,7 +308,7 @@ travelForm.addEventListener("submit", function (event) {
   lines.push("", "Please help me with the available options.");
 
   window.open(
-    WHATSAPP_URL + "?text=" + encodeURIComponent(lines.join("\\n")),
+    WHATSAPP_URL + "?text=" + encodeURIComponent(lines.join("\n")),
     "_blank"
   );
 });
