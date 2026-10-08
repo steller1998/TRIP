@@ -149,6 +149,15 @@ document.querySelectorAll("[data-close-service]").forEach(function (button) {
   button.addEventListener("click", closeServiceModal);
 });
 
+/* Directly wire the visible Book Now buttons too. */
+document.querySelectorAll(".text-button[data-service]").forEach(function (button) {
+  button.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    openServiceModal(button.getAttribute("data-service"));
+  });
+});
+
 serviceBookingForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const formData = new FormData(serviceBookingForm);
