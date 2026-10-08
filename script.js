@@ -131,9 +131,17 @@ function closeServiceModal() {
   document.body.classList.remove("modal-open");
 }
 
-document.querySelectorAll("[data-service]").forEach(function (button) {
-  button.addEventListener("click", function () {
-    openServiceModal(button.getAttribute("data-service"));
+document.querySelectorAll("[data-service]").forEach(function (element) {
+  element.addEventListener("click", function (event) {
+    if (event.target.closest("button")) return;
+    openServiceModal(element.getAttribute("data-service"));
+  });
+
+  element.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openServiceModal(element.getAttribute("data-service"));
+    }
   });
 });
 
