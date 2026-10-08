@@ -2,7 +2,7 @@
    TRIPORA JAVASCRIPT
 ========================================= */
 
-const WHATSAPP_NUMBER = "917002067055";
+const WHATSAPP_NUMBER = "919181565815";
 const WHATSAPP_URL = "https://wa.me/" + WHATSAPP_NUMBER;
 
 
