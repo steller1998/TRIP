@@ -19,4 +19,29 @@ const fmt=n=>Number(n).toLocaleString('en-IN');
 const elements={b:['bv','bp','bb'],c:['cv','cp','cb'],a:['av','ap','ab']};
 function tick(){const now=new Date();document.getElementById('clock').textContent=new Intl.DateTimeFormat('en-IN',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(now);document.getElementById('date').textContent=new Intl.DateTimeFormat('en-IN',{timeZone:'Asia/Kolkata',weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(now)}tick();setInterval(tick,1000);
 function render(data){const v={b:Number(data.candidates.bjp.votes),a:Number(data.candidates.aiudf.votes),c:Number(data.candidates.inc.votes)};if(![v.b,v.a,v.c].every(n=>Number.isFinite(n)&&n>=0))return;const total=v.b+v.a+v.c;if(!total)return;for(const k of Object.keys(elements)){const [n,p,bar]=elements[k];document.getElementById(n).textContent=fmt(v[k]);document.getElementById(p).textContent=(v[k]/total*100).toFixed(2);document.getElementById(bar).style.width=(v[k]/total*100)+'%'}document.getElementById('lead').textContent=(v.b>=v.a?'BJP leading by '+fmt(v.b-v.a)+' votes over AIUDF':'AIUDF leading by '+fmt(v.a-v.b)+' votes over BJP');if(data.last_checked_utc){const d=new Date(data.last_checked_utc);document.getElementById('checkedAt').textContent=new Intl.DateTimeFormat('en-IN',{timeZone:'Asia/Kolkata',day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}).format(d)+' IST';}}
-async function refresh(){try{const r=await fetch('./election-data.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('Data unavailable');render(await r.json())}catch(e){document.getElementById('checkedAt').textContent='Could not verify latest data; showing saved figures';}}refresh();setInterval(refresh,60000);</script></body></html>
+let lastDataSignature = "";
+async function refresh(){
+  try {
+    const r = await fetch("./election-data.json?nocache=" + Date.now(), {
+      cache: "no-store",
+      headers: {"Cache-Control": "no-cache", "Pragma": "no-cache"}
+    });
+    if (!r.ok) throw new Error("Data unavailable: " + r.status);
+    const data = await r.json();
+    if (!data || !data.candidates || !data.last_checked_utc) throw new Error("Saved data has not been auto-verified yet");
+    const signature = JSON.stringify(data.candidates) + "|" + data.last_checked_utc;
+    if (signature !== lastDataSignature) {
+      render(data);
+      lastDataSignature = signature;
+    }
+    const checked = new Date(data.last_checked_utc);
+    const ageMinutes = Math.max(0, Math.floor((Date.now() - checked.getTime()) / 60000));
+    document.getElementById("checkedAt").textContent =
+      new Intl.DateTimeFormat("en-IN", {timeZone:"Asia/Kolkata",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit",hour12:true}).format(checked) +
+      " IST · " + (ageMinutes === 0 ? "just checked" : ageMinutes + " min ago");
+  } catch(e) {
+    document.getElementById("checkedAt").textContent = "Latest data unavailable; showing last saved figures";
+  }
+}
+refresh();
+setInterval(refresh, 15000);</script></body></html>
