@@ -657,6 +657,13 @@ function getServiceSuggestions(service,id,query){
   return [];
 }
 
+function serviceNeedsAirportData(service,id){
+  if(service==="Hotels" && id==="city") return false;
+  if(service==="Visa" && id==="destination") return false;
+  if(service==="Trains" && (id==="from" || id==="to")) return false;
+  return ["city","destination","from","to","pickup","drop"].includes(id);
+}
+
 function setupServiceAutocomplete(){
   if(activeTab==="Flights") return;
 
@@ -722,16 +729,17 @@ function setupServiceAutocomplete(){
       }
 
       timer=setTimeout(async()=>{
-        if(!airportData.length) await loadAirports();
+        if(serviceNeedsAirportData(activeTab,id) && !airportData.length) await loadAirports();
         renderItems(getServiceSuggestions(activeTab,id,query));
       },70);
     });
 
-    input.addEventListener("focus",()=>{
-      if(input.value.trim().length>=2){
-        renderItems(getServiceSuggestions(activeTab,id,input.value));
+    input.addEventListener("focus",async()=>{
+      const query=input.value.trim();
+      if(query.length>=2){
+        if(serviceNeedsAirportData(activeTab,id) && !airportData.length) await loadAirports();
+        renderItems(getServiceSuggestions(activeTab,id,query));
       }
-      if(!airportData.length) loadAirports();
     });
 
     input.addEventListener("blur",()=>{
