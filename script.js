@@ -95,6 +95,8 @@ const flightModes=document.getElementById("flightModes");
 const specialFareBox=document.getElementById("specialFareBox");
 const booking=document.getElementById("booking");
 let activeTab="Flights";
+let selectedHotelRooms=[{adults:2,children:0,ages:[]}];
+let roomsGuestsDelegationReady=false;
 
 const AIRPORT_DATA_URL="https://davidmegginson.github.io/ourairports-data/airports.csv";
 let airportDataPromise=null;
@@ -667,7 +669,7 @@ function serviceNeedsAirportData(service,id){
 function setupServiceAutocomplete(){
   if(activeTab==="Flights") return;
 
-  const fieldIds=[...document.querySelectorAll("#dynamicFields input")];
+  const fieldIds=[...document.querySelectorAll("#dynamicFields input:not([type=hidden])")];
 
   fieldIds.forEach(input=>{
     if(input.dataset.autocompleteReady==="1") return;
@@ -809,17 +811,166 @@ function setupStayDateConstraints(){
   checkin.addEventListener("change",syncCheckoutMin);
 }
 
+function getHotelGuestSummary(){
+  const rooms=selectedHotelRooms.length;
+  const guests=selectedHotelRooms.reduce((sum,room)=>sum+room.adults+room.children,0);
+  return rooms+" Room"+(rooms===1?"":"s")+", "+guests+" Guest"+(guests===1?"":"s");
+}
+
+function getHotelRoomDetails(){
+  return selectedHotelRooms.map((room,index)=>{
+    const childText=room.children===1?"Child":"Children";
+    const ageText=room.ages.length?" (ages: "+room.ages.join(", ")+")":"";
+    return "Room "+(index+1)+": "+room.adults+" Adult"+(room.adults===1?"":"s")+", "+room.children+" "+childText+ageText;
+  }).join("; ");
+}
+
+function updateHotelGuestSummary(){
+  const wrapper=fieldsEl.querySelector(".rooms-guests-field");
+  if(!wrapper) return;
+  const trigger=wrapper.querySelector("#field-guests");
+  const summary=wrapper.querySelector("#field-guests-value");
+  const details=wrapper.querySelector("#field-room-details");
+  if(trigger) trigger.querySelector(".rooms-guests-summary").textContent=getHotelGuestSummary();
+  if(summary) summary.value=getHotelGuestSummary();
+  if(details) details.value=getHotelRoomDetails();
+}
+
+function renderHotelRoomsGuestControls(){
+  const wrapper=fieldsEl.querySelector(".rooms-guests-field");
+  if(!wrapper) return;
+  const list=wrapper.querySelector("#roomsGuestsRooms");
+  const addButton=wrapper.querySelector("[data-guests-action='add-room']");
+  list.innerHTML=selectedHotelRooms.map((room,index)=>{
+    const childrenAges=Array.from({length:room.children},(_,childIndex)=>{
+      const age=Number.isInteger(room.ages[childIndex])?room.ages[childIndex]:5;
+      const options=Array.from({length:13},(_,n)=>'<option value="'+n+'" '+(age===n?"selected":"")+' >'+n+" "+(n===1?"year":"years")+"</option>").join("");
+      return '<label class="child-age-select">Child '+(childIndex+1)+' age<select data-child-age data-room-index="'+index+'" data-child-index="'+childIndex+'" aria-label="Child '+(childIndex+1)+' age in room '+(index+1)+'">'+options+"</select></label>";
+    }).join("");
+    return '<section class="guest-room-card">' +
+      '<div class="guest-room-heading"><strong>ROOM '+(index+1)+'</strong>' +
+      (selectedHotelRooms.length>1?'<button type="button" class="remove-room-btn" data-guests-action="remove-room" data-room-index="'+index+'">Remove</button>':"") + '</div>' +
+      '<div class="guest-counter-row"><div class="guest-counter-label"><strong>Adults</strong><small>12+ years</small></div>' +
+      '<div class="guest-stepper"><button type="button" data-guests-action="adult-minus" data-room-index="'+index+'" aria-label="Decrease adults in room '+(index+1)+'" '+(room.adults<=1?"disabled":"")+">−</button>" +
+      "<span>"+room.adults+"</span>" +
+      '<button type="button" data-guests-action="adult-plus" data-room-index="'+index+'" aria-label="Increase adults in room '+(index+1)+'" '+(room.adults>=8?"disabled":"")+">+</button></div></div>" +
+      '<div class="guest-counter-row"><div class="guest-counter-label"><strong>Children</strong><small>0–12 years</small></div>' +
+      '<div class="guest-stepper"><button type="button" data-guests-action="child-minus" data-room-index="'+index+'" aria-label="Decrease children in room '+(index+1)+'" '+(room.children<=0?"disabled":"")+">−</button>" +
+      "<span>"+room.children+"</span>" +
+      '<button type="button" data-guests-action="child-plus" data-room-index="'+index+'" aria-label="Increase children in room '+(index+1)+'" '+(room.children>=4?"disabled":"")+">+</button></div></div>" +
+      (childrenAges?'<div class="child-age-list">'+childrenAges+"</div>":"") + '</section>';
+  }).join("");
+  if(addButton){
+    addButton.disabled=selectedHotelRooms.length>=5;
+    addButton.textContent=selectedHotelRooms.length>=5?"Maximum 5 rooms":"＋ Add another room";
+  }
+  updateHotelGuestSummary();
+}
+
+function setupHotelRoomsGuests(){
+  const wrapper=fieldsEl.querySelector(".rooms-guests-field");
+  if(!wrapper) return;
+  renderHotelRoomsGuestControls();
+  if(roomsGuestsDelegationReady) return;
+  roomsGuestsDelegationReady=true;
+
+  fieldsEl.addEventListener("click",event=>{
+    const trigger=event.target.closest("#field-guests");
+    if(trigger){
+      const activeWrapper=trigger.closest(".rooms-guests-field");
+      const popover=activeWrapper&&activeWrapper.querySelector("#roomsGuestsPopover");
+      if(!popover) return;
+      const isOpening=popover.hidden;
+      document.querySelectorAll("#roomsGuestsPopover").forEach(item=>item.hidden=true);
+      popover.hidden=!isOpening;
+      trigger.setAttribute("aria-expanded",isOpening?"true":"false");
+      return;
+    }
+    const actionButton=event.target.closest("[data-guests-action]");
+    if(!actionButton) return;
+    const activeWrapper=actionButton.closest(".rooms-guests-field");
+    if(!activeWrapper) return;
+    const action=actionButton.dataset.guestsAction;
+    const roomIndex=Number(actionButton.dataset.roomIndex);
+    const room=selectedHotelRooms[roomIndex];
+    if(action==="add-room" && selectedHotelRooms.length<5){
+      selectedHotelRooms.push({adults:2,children:0,ages:[]});
+    }else if(action==="remove-room" && selectedHotelRooms.length>1 && room){
+      selectedHotelRooms.splice(roomIndex,1);
+    }else if(room && action==="adult-minus" && room.adults>1){
+      room.adults--;
+    }else if(room && action==="adult-plus" && room.adults<8){
+      room.adults++;
+    }else if(room && action==="child-minus" && room.children>0){
+      room.children--;
+      room.ages.length=room.children;
+    }else if(room && action==="child-plus" && room.children<4){
+      room.children++;
+      room.ages.push(5);
+    }else if(action==="apply" || action==="close"){
+      const popover=activeWrapper.querySelector("#roomsGuestsPopover");
+      if(popover) popover.hidden=true;
+      const triggerButton=activeWrapper.querySelector("#field-guests");
+      if(triggerButton) triggerButton.setAttribute("aria-expanded","false");
+      return;
+    }
+    renderHotelRoomsGuestControls();
+  });
+
+  fieldsEl.addEventListener("change",event=>{
+    const ageSelect=event.target.closest("[data-child-age]");
+    if(!ageSelect) return;
+    const room=selectedHotelRooms[Number(ageSelect.dataset.roomIndex)];
+    if(!room) return;
+    room.ages[Number(ageSelect.dataset.childIndex)]=Number(ageSelect.value);
+    updateHotelGuestSummary();
+  });
+
+  document.addEventListener("click",event=>{
+    const openPopover=document.querySelector("#roomsGuestsPopover:not([hidden])");
+    if(!openPopover) return;
+    const activeWrapper=openPopover.closest(".rooms-guests-field");
+    if(activeWrapper && !activeWrapper.contains(event.target)){
+      openPopover.hidden=true;
+      const triggerButton=activeWrapper.querySelector("#field-guests");
+      if(triggerButton) triggerButton.setAttribute("aria-expanded","false");
+    }
+  });
+
+  document.addEventListener("keydown",event=>{
+    if(event.key!=="Escape") return;
+    const openPopover=document.querySelector("#roomsGuestsPopover:not([hidden])");
+    if(!openPopover) return;
+    openPopover.hidden=true;
+    const triggerButton=openPopover.closest(".rooms-guests-field")?.querySelector("#field-guests");
+    if(triggerButton) triggerButton.setAttribute("aria-expanded","false");
+  });
+}
+
 function render(tabName){
   activeTab=tabName;
   const cfg=configs[tabName];
   const activeFields=getActiveFields(tabName);
 
   fieldsEl.innerHTML=activeFields.map(([id,label,type,placeholder])=>{
+    if(tabName==="Hotels" && id==="guests"){
+      return '<div class="search-field rooms-guests-field">' +
+        '<label for="field-guests">Rooms &amp; Guests</label>' +
+        '<button type="button" id="field-guests" class="rooms-guests-trigger" aria-expanded="false" aria-controls="roomsGuestsPopover"><span class="rooms-guests-summary">1 Room, 2 Guests</span><span class="rooms-guests-chevron" aria-hidden="true">▾</span></button>' +
+        '<input type="hidden" id="field-guests-value" name="guests" value="1 Room, 2 Guests">' +
+        '<input type="hidden" id="field-room-details" name="roomDetails" value="Room 1: 2 Adults, 0 Children">' +
+        '<div class="rooms-guests-popover" id="roomsGuestsPopover" hidden>' +
+          '<div class="rooms-guests-popover-head"><div><strong>Rooms &amp; Guests</strong><small>Select guests for each room</small></div><button type="button" class="rooms-guests-close" data-guests-action="close" aria-label="Close">×</button></div>' +
+          '<div id="roomsGuestsRooms"></div>' +
+          '<div class="rooms-guests-popover-foot"><button type="button" class="add-room-btn" data-guests-action="add-room">＋ Add another room</button><button type="button" class="apply-guests-btn" data-guests-action="apply">Apply</button></div>' +
+        '</div></div>';
+    }
     const valueAttr=type==="number"?` value="${placeholder}" min="1"`:"";
     return `<div class="search-field"><label for="field-${id}">${label}</label><input id="field-${id}" name="${id}" type="${type}" placeholder="${placeholder}"${valueAttr} required></div>`;
   }).join("");
 
   fieldsEl.querySelectorAll('input[type="date"]').forEach(el=>el.min=today());
+  setupHotelRoomsGuests();
   setupStayDateConstraints();
   helper.textContent=cfg.helper;
   flightModes.style.display=tabName==="Flights"?"flex":"none";
