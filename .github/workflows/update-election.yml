@@ -12,33 +12,58 @@ on:
 permissions:
   contents: write
 
+# Do not cancel an in-progress poll; overlapping runs can lose data commits.
 concurrency:
   group: refresh-election-data
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
-      - name: Checkout repository
+      - name: Checkout latest main
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - name: Fetch verified ECI figures
+      - name: Fetch and validate official ECI figures
         run: python scripts/update_election.py
-      - name: Commit changed data
+      - name: Commit and push checked data safely
+        shell: bash
         run: |
-          if git diff --quiet -- election-data.json; then
-            echo "No data changes."
-            exit 0
-          fi
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add election-data.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
           git commit -m "Refresh ECI election figures"
-          # A manual edit or another workflow may have pushed while this job ran.
-          # Rebase our generated data commit on top of the latest main branch.
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Verified election data pushed successfully."
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+            echo "Push conflict on attempt $attempt; rebuilding from latest main."
+            git reset --hard origin/main
+            python scripts/update_election.py
+            git add election-data.json
+            if git diff --cached --quiet; then
+              echo "Latest main already contains current data."
+              exit 0
+            fi
+            git commit -m "Refresh ECI election figures (retry $attempt)"
+          done
+          echo "Could not publish checked data after 3 attempts." >&2
+          exit 1
