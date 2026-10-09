@@ -38,4 +38,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add election-data.json
           git commit -m "Refresh ECI election figures"
-          git push
+          # A manual edit or another workflow may have pushed while this job ran.
+          # Rebase our generated data commit on top of the latest main branch.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
