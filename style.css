@@ -62,7 +62,7 @@ img{display:block;max-width:100%}
 .floating-card{position:absolute;left:16px;bottom:16px;z-index:2;display:grid;padding:12px 15px;background:rgba(255,255,255,.95);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.16)}
 .floating-card strong{font:700 13px "Manrope",sans-serif}.floating-card span{font-size:10px;color:#6e7988;margin-top:2px}
 .booking-wrap{position:relative;margin-top:-30px;padding-bottom:30px}
-.booking-card{background:#fff;border:1px solid #dfe5ed;border-radius:18px;box-shadow:0 20px 55px rgba(29,46,77,.14);overflow:hidden}
+.booking-card{background:#fff;border:1px solid #dfe5ed;border-radius:18px;box-shadow:0 20px 55px rgba(29,46,77,.14);overflow:visible}
 .booking-tabs{display:flex;overflow:auto;padding:6px 8px 0;border-bottom:1px solid #edf0f4;scrollbar-width:none}
 .booking-tabs::-webkit-scrollbar{display:none}
 .booking-tab{border:0;background:#fff;color:#6b7686;padding:15px 13px 13px;white-space:nowrap;font-size:11px;font-weight:700;position:relative}
@@ -144,6 +144,48 @@ img{display:block;max-width:100%}
   font-size:10px;
 }
 .search-field input:focus{color:var(--blue)}
+
+.rooms-guests-field{z-index:20}
+.rooms-guests-trigger{
+  width:100%;margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  border:0;background:transparent;color:#1e2838;padding:0;text-align:left;font-size:15px;font-weight:700;
+}
+.rooms-guests-trigger:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:4px}
+.rooms-guests-chevron{color:var(--blue);font-size:12px}
+.rooms-guests-popover{
+  position:absolute;right:8px;top:calc(100% - 2px);width:350px;max-width:calc(100vw - 34px);
+  z-index:1800;background:#fff;border:1px solid #dfe5ed;border-radius:14px;
+  box-shadow:0 20px 55px rgba(22,39,69,.22);padding:16px;color:var(--ink);
+}
+.rooms-guests-popover[hidden]{display:none}
+.rooms-guests-popover-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid #edf0f4}
+.rooms-guests-popover-head strong{display:block;font:800 14px "Manrope",sans-serif}
+.rooms-guests-popover-head small{display:block;color:#7d8795;font-size:11px;margin-top:3px}
+.rooms-guests-close{border:0;background:#f2f5f9;border-radius:50%;width:28px;height:28px;line-height:1;color:#526075;font-size:19px}
+.guest-room-card{padding:13px 0;border-bottom:1px solid #edf0f4}
+.guest-room-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.guest-room-heading strong{font-size:10px;letter-spacing:.09em;color:#647086}
+.remove-room-btn{border:0;background:transparent;color:#d13b46;font-size:11px;font-weight:700}
+.guest-counter-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 0}
+.guest-counter-label strong{display:block;font-size:13px}
+.guest-counter-label small{display:block;font-size:10px;color:#818b9a;margin-top:2px}
+.guest-stepper{display:flex;align-items:center;gap:12px}
+.guest-stepper button{width:30px;height:30px;border:1px solid #c9d7eb;border-radius:8px;background:#fff;color:var(--blue);font-size:19px;line-height:1}
+.guest-stepper button:disabled{opacity:.35;cursor:not-allowed}
+.guest-stepper span{min-width:14px;text-align:center;font-size:13px;font-weight:800}
+.child-age-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.child-age-select{display:grid;gap:4px;font-size:10px;color:#687486}
+.child-age-select select{width:100%;border:1px solid #dce3ed;border-radius:7px;background:#fff;padding:7px;font:600 11px "DM Sans",sans-serif;color:#1e2838}
+.rooms-guests-popover-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px}
+.add-room-btn{border:0;background:transparent;color:var(--blue);font-size:12px;font-weight:800;text-align:left}
+.add-room-btn:disabled{color:#8d96a4;cursor:not-allowed}
+.apply-guests-btn{border:0;border-radius:9px;background:var(--blue);color:#fff;padding:10px 20px;font-size:12px;font-weight:800}
+.apply-guests-btn:hover{background:var(--blue-dark)}
+@media(max-width:560px){
+  .rooms-guests-popover{right:-5px;top:calc(100% + 3px);width:340px;max-width:calc(100vw - 36px);padding:13px}
+  .rooms-guests-field{z-index:30}
+}
+
 .special-fare-box{display:flex;align-items:stretch;gap:0;border-top:1px solid #f0f2f6;padding:12px 18px;overflow:auto}
 .special-fare-title{font-size:11px;font-weight:800;color:#445267;min-width:125px;display:flex;align-items:center}
 .fare-option{display:flex;align-items:center;gap:8px;min-width:145px;padding:8px 11px;border:1px solid transparent;border-radius:10px;cursor:pointer}
