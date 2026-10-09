@@ -954,11 +954,10 @@ function render(tabName){
 
   fieldsEl.innerHTML=activeFields.map(([id,label,type,placeholder])=>{
     if(tabName==="Hotels" && id==="hoteltype"){
-      const options=suggestionOptions.hoteltype.map(option=>'<option value="'+option+'">'+option+'</option>').join("");
+      const options=["Any hotel",...suggestionOptions.hoteltype].map(option=>'<option value="'+option+'">'+option+'</option>').join("");
       return '<div class="search-field hotel-preference-field">' +
         '<label for="field-hoteltype">Hotel Preference</label>' +
-        '<select id="field-hoteltype" name="hoteltype" required>' +
-          '<option value="" disabled selected>Select preference</option>' + options +
+        '<select id="field-hoteltype" name="hoteltype" required>' + options +
         '</select></div>';
     }
     if(tabName==="Hotels" && id==="guests"){
@@ -1012,9 +1011,148 @@ tabs.forEach(t=>t.addEventListener("click",()=>{
   if(fromNav) closeMobileNav();
 }));
 
+let latestHotelSearch={};
+
+function escapeHotelHtml(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[char]));
+}
+
+function getHotelPreviewImage(city){
+  const key=normalizeAirportText(city);
+  const images={
+    "goa":"assets/goa.jpg",
+    "dubai":"assets/dubai.jpg",
+    "mumbai":"assets/mumbai.jpg",
+    "delhi":"assets/delhi.jpg",
+    "new delhi":"assets/delhi.jpg",
+    "manali":"assets/manali.jpg",
+    "shimla":"assets/manali.jpg",
+    "srinagar":"assets/kashmir.jpg",
+    "kashmir":"assets/kashmir.jpg"
+  };
+  return images[key]||"";
+}
+
+function createHotelEnquiryMessage(hotelName){
+  const request=latestHotelSearch;
+  return [
+    "Hello Tripora,",
+    "",
+    "I would like to enquire about this hotel listing: "+hotelName,
+    "Destination / search: "+(request.query||"Not specified"),
+    "Check-in: "+(request.checkin||"Not specified"),
+    "Check-out: "+(request.checkout||"Not specified"),
+    "Rooms & Guests: "+(request.guests||"Not specified"),
+    "Room-wise guest details: "+(request.roomDetails||"Not specified"),
+    "Hotel preference: "+(request.hoteltype||"Any hotel"),
+    "",
+    "Please confirm actual availability, total price, taxes and cancellation conditions."
+  ].join("\n");
+}
+
+function renderHotelResults(formData){
+  const results=document.getElementById("hotelResults");
+  if(!results) return;
+
+  latestHotelSearch={
+    query:String(formData.get("city")||"").trim(),
+    checkin:String(formData.get("checkin")||""),
+    checkout:String(formData.get("checkout")||""),
+    guests:String(formData.get("guests")||""),
+    roomDetails:String(formData.get("roomDetails")||""),
+    hoteltype:String(formData.get("hoteltype")||"Any hotel")
+  };
+
+  const q=normalizeAirportText(latestHotelSearch.query);
+  const words=q.split(/\s+/).filter(Boolean);
+  const matches=hotelProperties.map(hotel=>{
+    const name=normalizeAirportText(hotel.n);
+    const city=normalizeAirportText(hotel.c);
+    const country=normalizeAirportText(hotel.o);
+    const hay=[name,city,country].join(" ");
+    let score=0;
+    if(q && name===q) score+=1400;
+    if(q && name.includes(q)) score+=1050;
+    if(q && city===q) score+=1000;
+    else if(q && city.startsWith(q)) score+=850;
+    else if(q && city.includes(q)) score+=700;
+    if(q && country.includes(q)) score+=400;
+    if(words.length>1 && words.every(word=>hay.includes(word))) score=Math.max(score,650);
+    return {hotel,score};
+  }).filter(item=>q?item.score>0:true)
+    .sort((a,b)=>b.score-a.score||a.hotel.n.localeCompare(b.hotel.n))
+    .map(item=>item.hotel);
+
+  const visible=matches.slice(0,12);
+  const dateText=latestHotelSearch.checkin&&latestHotelSearch.checkout
+    ? latestHotelSearch.checkin+" → "+latestHotelSearch.checkout
+    : "Select dates in the search form";
+  const preference=latestHotelSearch.hoteltype||"Any hotel";
+
+  results.innerHTML=
+    '<div class="hotel-results-head">' +
+      '<div><span class="section-kicker">TRIPORA HOTEL SEARCH</span>' +
+      '<h2>Hotel options <span>for your stay.</span></h2>' +
+      '<p class="hotel-results-summary">'+escapeHotelHtml(latestHotelSearch.query||"All sample destinations")+' · '+escapeHotelHtml(dateText)+' · '+escapeHotelHtml(latestHotelSearch.guests||"1 Room, 2 Guests")+'</p></div>' +
+      '<button type="button" class="hotel-change-search" data-hotel-action="change-search">← Change search</button>' +
+    '</div>' +
+    '<div class="hotel-demo-notice"><strong>Demo preview</strong><span>These are sample property names, not live TBO results. Actual rates, availability, room types and amenities will appear after API integration.</span></div>' +
+    '<div class="hotel-results-filterline"><span>'+(visible.length?'Showing '+visible.length+' sample listing'+(visible.length===1?'':'s'):'No sample listings found')+'</span><span>Preference: '+escapeHotelHtml(preference)+'</span></div>' +
+    (visible.length
+      ? '<div class="hotel-results-grid">'+visible.map(hotel=>{
+          const image=getHotelPreviewImage(hotel.c);
+          const imageMarkup=image
+            ? '<div class="hotel-result-photo"><img src="'+image+'" alt="'+escapeHotelHtml(hotel.c)+' destination preview" loading="lazy"><span>Destination image</span></div>'
+            : '<div class="hotel-result-photo hotel-result-photo-placeholder"><span class="hotel-placeholder-icon">⌂</span><span>Hotel preview</span></div>';
+          return '<article class="hotel-result-card">'+imageMarkup+
+            '<div class="hotel-result-content"><div class="hotel-result-topline"><span class="hotel-sample-label">SAMPLE LISTING</span><span class="hotel-result-location">⌖ '+escapeHotelHtml(hotel.c)+', '+escapeHotelHtml(hotel.o)+'</span></div>'+
+            '<h3>'+escapeHotelHtml(hotel.n)+'</h3>'+
+            '<p class="hotel-result-note">Property name preview · '+escapeHotelHtml(hotel.c)+'</p>'+
+            '<div class="hotel-result-facts"><span>Availability: pending API</span><span>Live price: not connected</span></div>'+
+            '<div class="hotel-result-bottom"><div><strong>Price unavailable</strong><small>Live rates not connected yet</small></div><button type="button" class="hotel-enquire-button" data-hotel-action="enquire" data-hotel-name="'+escapeHotelHtml(hotel.n)+'">Enquire</button></div></div></article>';
+        }).join('')+'</div>'
+      : '<div class="hotel-no-results"><h3>No matching sample hotel</h3><p>Try a city such as Goa, Dubai, Mumbai or search a property name such as Taj Palace. Full supplier inventory is not connected yet.</p><button type="button" class="primary-btn" data-hotel-action="contact">Ask Tripora to help</button></div>')+
+    '<p class="hotel-results-disclaimer">Destination pictures are illustrative and are not photos of the specific hotel. No availability or price is being confirmed on this demo page.</p>';
+
+  results.hidden=false;
+  results.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+const hotelResultsElement=document.getElementById("hotelResults");
+hotelResultsElement?.addEventListener("click",event=>{
+  const button=event.target.closest("[data-hotel-action]");
+  if(!button) return;
+  const action=button.dataset.hotelAction;
+  if(action==="change-search"){
+    document.getElementById("booking")?.scrollIntoView({behavior:"smooth",block:"start"});
+    return;
+  }
+  let message;
+  if(action==="enquire"){
+    message=createHotelEnquiryMessage(button.dataset.hotelName||"Selected hotel");
+  }else if(action==="contact"){
+    message=[
+      "Hello Tripora,",
+      "Please help me find a hotel.",
+      "Destination / search: "+(latestHotelSearch.query||"Not specified"),
+      "Check-in: "+(latestHotelSearch.checkin||"Not specified"),
+      "Check-out: "+(latestHotelSearch.checkout||"Not specified"),
+      "Rooms & Guests: "+(latestHotelSearch.guests||"Not specified"),
+      "Preference: "+(latestHotelSearch.hoteltype||"Any hotel")
+    ].join("\n");
+  }
+  if(message) window.open(WHATSAPP_URL+"?text="+encodeURIComponent(message),"_blank","noopener");
+});
+
 document.getElementById("searchForm").addEventListener("submit",e=>{
   e.preventDefault();
   const data=new FormData(e.currentTarget);
+  if(activeTab==="Hotels"){
+    renderHotelResults(data);
+    return;
+  }
   const lines=["Hello Tripora,","",`I want ${activeTab} booking assistance.`,""];
   if(activeTab==="Flights"){
     const mode=document.querySelector('input[name="flightMode"]:checked');
