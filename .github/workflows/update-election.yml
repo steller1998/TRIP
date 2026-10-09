@@ -1,0 +1,41 @@
+name: Refresh ECI election figures
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/update_election.py"
+      - ".github/workflows/update-election.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-election-data
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Fetch verified ECI figures
+        run: python scripts/update_election.py
+      - name: Commit changed data
+        run: |
+          if git diff --quiet -- election-data.json; then
+            echo "No data changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add election-data.json
+          git commit -m "Refresh ECI election figures"
+          git push
