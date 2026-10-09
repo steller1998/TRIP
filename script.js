@@ -782,6 +782,33 @@ function getActiveFields(tabName){
   ];
 }
 
+function setupStayDateConstraints(){
+  if(activeTab!=="Hotels" && activeTab!=="Homestays") return;
+
+  const checkin=document.getElementById("field-checkin");
+  const checkout=document.getElementById("field-checkout");
+  if(!checkin || !checkout) return;
+
+  const nextDay=(dateValue)=>{
+    if(!dateValue) return today();
+    const d=new Date(dateValue+"T12:00:00");
+    d.setDate(d.getDate()+1);
+    const year=d.getFullYear();
+    const month=String(d.getMonth()+1).padStart(2,"0");
+    const day=String(d.getDate()).padStart(2,"0");
+    return year+"-"+month+"-"+day;
+  };
+
+  const syncCheckoutMin=()=>{
+    checkout.min=checkin.value?nextDay(checkin.value):nextDay(today());
+    if(checkout.value && checkout.value<checkout.min) checkout.value="";
+  };
+
+  checkin.min=today();
+  syncCheckoutMin();
+  checkin.addEventListener("change",syncCheckoutMin);
+}
+
 function render(tabName){
   activeTab=tabName;
   const cfg=configs[tabName];
@@ -793,6 +820,7 @@ function render(tabName){
   }).join("");
 
   fieldsEl.querySelectorAll('input[type="date"]').forEach(el=>el.min=today());
+  setupStayDateConstraints();
   helper.textContent=cfg.helper;
   flightModes.style.display=tabName==="Flights"?"flex":"none";
   specialFareBox.style.display=tabName==="Flights"?"flex":"none";
