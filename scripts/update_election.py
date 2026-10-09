@@ -87,6 +87,6 @@ payload = {
     "status": "auto_checked",
     "candidates": found
 }
-Path("election-data.json").write_text(json.dumps(payload, indent=2) + "\\n", encoding="utf-8")
+Path("election-data.json").write_text(json.dumps(payload, indent=2) + chr(10), encoding="utf-8")
 print("Verified ECI candidate totals:", {key: item["votes"] for key, item in found.items()})
 print("Check time (UTC):", checked)
