@@ -434,98 +434,7 @@ const hotelCities=[
   "Cape Town, South Africa","Nairobi, Kenya","Mauritius, Mauritius"
 ];
 
-const hotelProperties=[
-  {n:"Taj Palace, New Delhi",c:"New Delhi",o:"India"},
-  {n:"The Leela Palace New Delhi",c:"New Delhi",o:"India"},
-  {n:"ITC Maurya, a Luxury Collection Hotel",c:"New Delhi",o:"India"},
-  {n:"The Imperial New Delhi",c:"New Delhi",o:"India"},
-  {n:"The Lalit New Delhi",c:"New Delhi",o:"India"},
-  {n:"JW Marriott Hotel New Delhi Aerocity",c:"New Delhi",o:"India"},
-  {n:"Radisson Blu Plaza Delhi Airport",c:"New Delhi",o:"India"},
-  {n:"The Oberoi Gurgaon",c:"Gurugram",o:"India"},
-  {n:"Trident Gurgaon",c:"Gurugram",o:"India"},
-  {n:"Taj City Centre Gurugram",c:"Gurugram",o:"India"},
-  {n:"The Leela Ambience Gurugram Hotel & Residences",c:"Gurugram",o:"India"},
-  {n:"Taj Mahal Palace, Mumbai",c:"Mumbai",o:"India"},
-  {n:"The Oberoi Mumbai",c:"Mumbai",o:"India"},
-  {n:"Trident Nariman Point",c:"Mumbai",o:"India"},
-  {n:"ITC Maratha, a Luxury Collection Hotel",c:"Mumbai",o:"India"},
-  {n:"The St. Regis Mumbai",c:"Mumbai",o:"India"},
-  {n:"Taj Santacruz",c:"Mumbai",o:"India"},
-  {n:"Taj Exotica Resort & Spa, Goa",c:"Goa",o:"India"},
-  {n:"W Goa",c:"Goa",o:"India"},
-  {n:"The Leela Goa",c:"Goa",o:"India"},
-  {n:"ITC Grand Goa Resort & Spa",c:"Goa",o:"India"},
-  {n:"Grand Hyatt Goa",c:"Goa",o:"India"},
-  {n:"Taj Fort Aguada Resort & Spa",c:"Goa",o:"India"},
-  {n:"Taj West End",c:"Bengaluru",o:"India"},
-  {n:"The Leela Palace Bengaluru",c:"Bengaluru",o:"India"},
-  {n:"ITC Gardenia, a Luxury Collection Hotel",c:"Bengaluru",o:"India"},
-  {n:"The Oberoi Bengaluru",c:"Bengaluru",o:"India"},
-  {n:"Taj Krishna",c:"Hyderabad",o:"India"},
-  {n:"ITC Kohenur, a Luxury Collection Hotel",c:"Hyderabad",o:"India"},
-  {n:"Taj Deccan",c:"Hyderabad",o:"India"},
-  {n:"The Leela Palace Chennai",c:"Chennai",o:"India"},
-  {n:"ITC Grand Chola",c:"Chennai",o:"India"},
-  {n:"Taj Coromandel",c:"Chennai",o:"India"},
-  {n:"Taj Bengal",c:"Kolkata",o:"India"},
-  {n:"ITC Royal Bengal",c:"Kolkata",o:"India"},
-  {n:"The Oberoi Grand Kolkata",c:"Kolkata",o:"India"},
-  {n:"Rambagh Palace",c:"Jaipur",o:"India"},
-  {n:"The Oberoi Rajvilas Jaipur",c:"Jaipur",o:"India"},
-  {n:"ITC Rajputana, a Luxury Collection Hotel",c:"Jaipur",o:"India"},
-  {n:"Taj Jai Mahal Palace",c:"Jaipur",o:"India"},
-  {n:"Taj Lake Palace",c:"Udaipur",o:"India"},
-  {n:"The Oberoi Udaivilas",c:"Udaipur",o:"India"},
-  {n:"Trident Udaipur",c:"Udaipur",o:"India"},
-  {n:"The Oberoi Amarvilas",c:"Agra",o:"India"},
-  {n:"ITC Mughal, a Luxury Collection Resort & Spa",c:"Agra",o:"India"},
-  {n:"Taj Hotel & Convention Centre Agra",c:"Agra",o:"India"},
-  {n:"Taj Rishikesh Resort & Spa",c:"Rishikesh",o:"India"},
-  {n:"Aloha On The Ganges",c:"Rishikesh",o:"India"},
-  {n:"Taj Madikeri Resort & Spa",c:"Coorg",o:"India"},
-  {n:"The Leela Palace Udaipur",c:"Udaipur",o:"India"},
-  {n:"Taj Corbett Resort & Spa",c:"Corbett",o:"India"},
-  {n:"The Oberoi Cecil",c:"Shimla",o:"India"},
-  {n:"Wildflower Hall, An Oberoi Resort",c:"Shimla",o:"India"},
-  {n:"Hyatt Regency Delhi",c:"New Delhi",o:"India"},
-  {n:"Hyatt Regency Mumbai",c:"Mumbai",o:"India"},
-  {n:"Hyatt Regency Goa Resort and Spa",c:"Goa",o:"India"},
-  {n:"Taj Dubai",c:"Dubai",o:"United Arab Emirates"},
-  {n:"Burj Al Arab Jumeirah",c:"Dubai",o:"United Arab Emirates"},
-  {n:"Atlantis, The Palm",c:"Dubai",o:"United Arab Emirates"},
-  {n:"JW Marriott Marquis Hotel Dubai",c:"Dubai",o:"United Arab Emirates"},
-  {n:"Jumeirah Beach Hotel",c:"Dubai",o:"United Arab Emirates"},
-  {n:"The Ritz-Carlton Dubai",c:"Dubai",o:"United Arab Emirates"},
-  {n:"Palace Downtown",c:"Dubai",o:"United Arab Emirates"},
-  {n:"Raffles Dubai",c:"Dubai",o:"United Arab Emirates"},
-  {n:"Emirates Palace Mandarin Oriental",c:"Abu Dhabi",o:"United Arab Emirates"},
-  {n:"The Ritz-Carlton Abu Dhabi, Grand Canal",c:"Abu Dhabi",o:"United Arab Emirates"},
-  {n:"The Savoy",c:"London",o:"United Kingdom"},
-  {n:"The Ritz London",c:"London",o:"United Kingdom"},
-  {n:"The Langham, London",c:"London",o:"United Kingdom"},
-  {n:"The Dorchester",c:"London",o:"United Kingdom"},
-  {n:"Park Hyatt Paris-Vendôme",c:"Paris",o:"France"},
-  {n:"The Ritz Paris",c:"Paris",o:"France"},
-  {n:"Shangri-La Paris",c:"Paris",o:"France"},
-  {n:"The Plaza",c:"New York",o:"United States"},
-  {n:"The St. Regis New York",c:"New York",o:"United States"},
-  {n:"Park Hyatt New York",c:"New York",o:"United States"},
-  {n:"Marina Bay Sands",c:"Singapore",o:"Singapore"},
-  {n:"Raffles Singapore",c:"Singapore",o:"Singapore"},
-  {n:"The Fullerton Hotel Singapore",c:"Singapore",o:"Singapore"},
-  {n:"The Peninsula Hong Kong",c:"Hong Kong",o:"Hong Kong"},
-  {n:"The Tokyo Station Hotel",c:"Tokyo",o:"Japan"},
-  {n:"Park Hyatt Tokyo",c:"Tokyo",o:"Japan"},
-  {n:"The Peninsula Tokyo",c:"Tokyo",o:"Japan"},
-  {n:"The Grand Hyatt Bangkok",c:"Bangkok",o:"Thailand"},
-  {n:"The Peninsula Bangkok",c:"Bangkok",o:"Thailand"},
-  {n:"The Westin Resort Nusa Dua",c:"Bali",o:"Indonesia"},
-  {n:"Four Seasons Resort Bali at Sayan",c:"Bali",o:"Indonesia"},
-  {n:"The St. Regis Maldives Vommuli Resort",c:"Maldives",o:"Maldives"},
-  {n:"Anantara Iko Mauritius Resort & Villas",c:"Mauritius",o:"Mauritius"},
-  {n:"Burj Al Arab",c:"Dubai",o:"United Arab Emirates"}
-];
+const hotelProperties=window.TRIPORA_HOTELS||[];
 
 const suggestionOptions={
   class:["Economy","Premium Economy","Business","First Class","Sleeper","3A","2A","1A","AC Chair Car"],
@@ -1011,148 +920,20 @@ tabs.forEach(t=>t.addEventListener("click",()=>{
   if(fromNav) closeMobileNav();
 }));
 
-let latestHotelSearch={};
-
-function escapeHotelHtml(value){
-  return String(value??"").replace(/[&<>"']/g,char=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[char]));
-}
-
-function getHotelPreviewImage(city){
-  const key=normalizeAirportText(city);
-  const images={
-    "goa":"assets/goa.jpg",
-    "dubai":"assets/dubai.jpg",
-    "mumbai":"assets/mumbai.jpg",
-    "delhi":"assets/delhi.jpg",
-    "new delhi":"assets/delhi.jpg",
-    "manali":"assets/manali.jpg",
-    "shimla":"assets/manali.jpg",
-    "srinagar":"assets/kashmir.jpg",
-    "kashmir":"assets/kashmir.jpg"
-  };
-  return images[key]||"";
-}
-
-function createHotelEnquiryMessage(hotelName){
-  const request=latestHotelSearch;
-  return [
-    "Hello Tripora,",
-    "",
-    "I would like to enquire about this hotel listing: "+hotelName,
-    "Destination / search: "+(request.query||"Not specified"),
-    "Check-in: "+(request.checkin||"Not specified"),
-    "Check-out: "+(request.checkout||"Not specified"),
-    "Rooms & Guests: "+(request.guests||"Not specified"),
-    "Room-wise guest details: "+(request.roomDetails||"Not specified"),
-    "Hotel preference: "+(request.hoteltype||"Any hotel"),
-    "",
-    "Please confirm actual availability, total price, taxes and cancellation conditions."
-  ].join("\n");
-}
-
-function renderHotelResults(formData){
-  const results=document.getElementById("hotelResults");
-  if(!results) return;
-
-  latestHotelSearch={
-    query:String(formData.get("city")||"").trim(),
-    checkin:String(formData.get("checkin")||""),
-    checkout:String(formData.get("checkout")||""),
-    guests:String(formData.get("guests")||""),
-    roomDetails:String(formData.get("roomDetails")||""),
-    hoteltype:String(formData.get("hoteltype")||"Any hotel")
-  };
-
-  const q=normalizeAirportText(latestHotelSearch.query);
-  const words=q.split(/\s+/).filter(Boolean);
-  const matches=hotelProperties.map(hotel=>{
-    const name=normalizeAirportText(hotel.n);
-    const city=normalizeAirportText(hotel.c);
-    const country=normalizeAirportText(hotel.o);
-    const hay=[name,city,country].join(" ");
-    let score=0;
-    if(q && name===q) score+=1400;
-    if(q && name.includes(q)) score+=1050;
-    if(q && city===q) score+=1000;
-    else if(q && city.startsWith(q)) score+=850;
-    else if(q && city.includes(q)) score+=700;
-    if(q && country.includes(q)) score+=400;
-    if(words.length>1 && words.every(word=>hay.includes(word))) score=Math.max(score,650);
-    return {hotel,score};
-  }).filter(item=>q?item.score>0:true)
-    .sort((a,b)=>b.score-a.score||a.hotel.n.localeCompare(b.hotel.n))
-    .map(item=>item.hotel);
-
-  const visible=matches.slice(0,12);
-  const dateText=latestHotelSearch.checkin&&latestHotelSearch.checkout
-    ? latestHotelSearch.checkin+" → "+latestHotelSearch.checkout
-    : "Select dates in the search form";
-  const preference=latestHotelSearch.hoteltype||"Any hotel";
-
-  results.innerHTML=
-    '<div class="hotel-results-head">' +
-      '<div><span class="section-kicker">TRIPORA HOTEL SEARCH</span>' +
-      '<h2>Hotel options <span>for your stay.</span></h2>' +
-      '<p class="hotel-results-summary">'+escapeHotelHtml(latestHotelSearch.query||"All sample destinations")+' · '+escapeHotelHtml(dateText)+' · '+escapeHotelHtml(latestHotelSearch.guests||"1 Room, 2 Guests")+'</p></div>' +
-      '<button type="button" class="hotel-change-search" data-hotel-action="change-search">← Change search</button>' +
-    '</div>' +
-    '<div class="hotel-demo-notice"><strong>Demo preview</strong><span>These are sample property names, not live TBO results. Actual rates, availability, room types and amenities will appear after API integration.</span></div>' +
-    '<div class="hotel-results-filterline"><span>'+(visible.length?'Showing '+visible.length+' sample listing'+(visible.length===1?'':'s'):'No sample listings found')+'</span><span>Preference: '+escapeHotelHtml(preference)+'</span></div>' +
-    (visible.length
-      ? '<div class="hotel-results-grid">'+visible.map(hotel=>{
-          const image=getHotelPreviewImage(hotel.c);
-          const imageMarkup=image
-            ? '<div class="hotel-result-photo"><img src="'+image+'" alt="'+escapeHotelHtml(hotel.c)+' destination preview" loading="lazy"><span>Destination image</span></div>'
-            : '<div class="hotel-result-photo hotel-result-photo-placeholder"><span class="hotel-placeholder-icon">⌂</span><span>Hotel preview</span></div>';
-          return '<article class="hotel-result-card">'+imageMarkup+
-            '<div class="hotel-result-content"><div class="hotel-result-topline"><span class="hotel-sample-label">SAMPLE LISTING</span><span class="hotel-result-location">⌖ '+escapeHotelHtml(hotel.c)+', '+escapeHotelHtml(hotel.o)+'</span></div>'+
-            '<h3>'+escapeHotelHtml(hotel.n)+'</h3>'+
-            '<p class="hotel-result-note">Property name preview · '+escapeHotelHtml(hotel.c)+'</p>'+
-            '<div class="hotel-result-facts"><span>Availability: pending API</span><span>Live price: not connected</span></div>'+
-            '<div class="hotel-result-bottom"><div><strong>Price unavailable</strong><small>Live rates not connected yet</small></div><button type="button" class="hotel-enquire-button" data-hotel-action="enquire" data-hotel-name="'+escapeHotelHtml(hotel.n)+'">Enquire</button></div></div></article>';
-        }).join('')+'</div>'
-      : '<div class="hotel-no-results"><h3>No matching sample hotel</h3><p>Try a city such as Goa, Dubai, Mumbai or search a property name such as Taj Palace. Full supplier inventory is not connected yet.</p><button type="button" class="primary-btn" data-hotel-action="contact">Ask Tripora to help</button></div>')+
-    '<p class="hotel-results-disclaimer">Destination pictures are illustrative and are not photos of the specific hotel. No availability or price is being confirmed on this demo page.</p>';
-
-  results.hidden=false;
-  results.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-const hotelResultsElement=document.getElementById("hotelResults");
-hotelResultsElement?.addEventListener("click",event=>{
-  const button=event.target.closest("[data-hotel-action]");
-  if(!button) return;
-  const action=button.dataset.hotelAction;
-  if(action==="change-search"){
-    document.getElementById("booking")?.scrollIntoView({behavior:"smooth",block:"start"});
-    return;
-  }
-  let message;
-  if(action==="enquire"){
-    message=createHotelEnquiryMessage(button.dataset.hotelName||"Selected hotel");
-  }else if(action==="contact"){
-    message=[
-      "Hello Tripora,",
-      "Please help me find a hotel.",
-      "Destination / search: "+(latestHotelSearch.query||"Not specified"),
-      "Check-in: "+(latestHotelSearch.checkin||"Not specified"),
-      "Check-out: "+(latestHotelSearch.checkout||"Not specified"),
-      "Rooms & Guests: "+(latestHotelSearch.guests||"Not specified"),
-      "Preference: "+(latestHotelSearch.hoteltype||"Any hotel")
-    ].join("\n");
-  }
-  if(message) window.open(WHATSAPP_URL+"?text="+encodeURIComponent(message),"_blank","noopener");
-});
-
 document.getElementById("searchForm").addEventListener("submit",e=>{
   e.preventDefault();
   const data=new FormData(e.currentTarget);
+
   if(activeTab==="Hotels"){
-    renderHotelResults(data);
+    const searchParams=new URLSearchParams();
+    for(const [key,value] of data.entries()){
+      if(value!==null && String(value).trim()!=="") searchParams.set(key,String(value).trim());
+    }
+    if(!searchParams.has("hoteltype")) searchParams.set("hoteltype","Any hotel");
+    window.location.href="hotels.html?"+searchParams.toString();
     return;
   }
+
   const lines=["Hello Tripora,","",`I want ${activeTab} booking assistance.`,""];
   if(activeTab==="Flights"){
     const mode=document.querySelector('input[name="flightMode"]:checked');
