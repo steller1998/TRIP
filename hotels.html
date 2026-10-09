@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hotel Search Results | Tripora</title>
+<meta name="description" content="Review hotel search results and enquiry details with Tripora. Live prices and availability will be shown after supplier API integration.">
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=20261009-2">
+<link rel="stylesheet" href="hotel-results-page.css?v=20261009-1">
+</head>
+<body class="hotel-results-page">
+<header class="results-header">
+  <a class="results-brand" href="index.html" aria-label="Tripora home">
+    <span class="results-brand-mark" aria-hidden="true">T</span>
+    <span><strong>TRIPORA</strong><small>TRAVEL BEYOND BOUNDARIES</small></span>
+  </a>
+  <div class="results-header-links">
+    <a href="index.html#booking">Change search</a>
+    <a href="https://wa.me/919181565815?text=Hello%20Tripora%2C%20I%20need%20hotel%20booking%20assistance." target="_blank" rel="noopener">Need help?</a>
+  </div>
+</header>
+
+<main class="hotel-results-main">
+  <section class="results-search-summary">
+    <div class="results-breadcrumb"><a href="index.html">Home</a><span>›</span><span>Hotels</span><span>›</span><strong>Search results</strong></div>
+    <div class="results-summary-row">
+      <div>
+        <span class="results-kicker">YOUR HOTEL SEARCH</span>
+        <h1 id="resultsTitle">Hotel options for your stay</h1>
+        <p id="resultsSubtitle">Loading your search details…</p>
+      </div>
+      <a class="change-search-btn" href="index.html#booking">← Edit search</a>
+    </div>
+    <div class="stay-summary-chips" id="staySummaryChips"></div>
+  </section>
+
+  <section class="results-api-notice" aria-label="Demo information">
+    <span class="notice-icon" aria-hidden="true">i</span>
+    <div>
+      <strong>Preview results — live hotel inventory is not connected yet</strong>
+      <p>Property names below are sample listings for testing the page. Live availability, room types, official photos, ratings, amenities, cancellation rules and prices will only appear after TBO provides API access and the secure integration is completed.</p>
+    </div>
+  </section>
+
+  <section class="results-workspace">
+    <aside class="results-sidebar">
+      <div class="sidebar-head"><h2>Your search</h2><a href="index.html#booking">Edit</a></div>
+      <div class="sidebar-detail"><span>Destination / property</span><strong id="sideDestination">—</strong></div>
+      <div class="sidebar-detail"><span>Check-in</span><strong id="sideCheckin">Not selected</strong></div>
+      <div class="sidebar-detail"><span>Check-out</span><strong id="sideCheckout">Not selected</strong></div>
+      <div class="sidebar-detail"><span>Length of stay</span><strong id="sideNights">Not calculated</strong></div>
+      <div class="sidebar-detail"><span>Rooms & guests</span><strong id="sideGuests">—</strong></div>
+      <div class="sidebar-detail"><span>Room-wise occupancy</span><p id="sideRoomDetails">—</p></div>
+      <div class="sidebar-detail"><span>Hotel preference</span><strong id="sidePreference">Any hotel</strong></div>
+      <div class="sidebar-note">The chosen preference is saved with your enquiry. It cannot filter verified live properties until supplier data is connected.</div>
+    </aside>
+
+    <div class="results-list-area">
+      <div class="results-list-head">
+        <div><h2>Available hotel previews</h2><p id="sampleCount">Preparing sample listings…</p></div>
+        <label class="sort-field">Sort by
+          <select id="sortResults">
+            <option value="recommended">Recommended</option>
+            <option value="name">Name: A–Z</option>
+            <option value="location">Location: A–Z</option>
+          </select>
+        </label>
+      </div>
+      <div id="hotelCards" class="results-cards" aria-live="polite"></div>
+      <div id="emptyResults" class="empty-results" hidden>
+        <div class="empty-icon" aria-hidden="true">⌕</div>
+        <h2>No matching sample hotel found</h2>
+        <p>Try a destination such as Goa, Dubai, Mumbai or a property name such as Taj Palace. Full supplier inventory is not connected yet.</p>
+        <a class="change-search-btn" href="index.html#booking">Change search</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="results-bottom-help">
+    <div><span class="results-kicker">NEED A HAND?</span><h2>Let Tripora help find your stay.</h2><p>Share the destination and dates with our travel desk. The team must confirm the actual rate and availability before you pay.</p></div>
+    <a id="generalEnquiry" class="primary-btn" href="https://wa.me/919181565815" target="_blank" rel="noopener">Ask Tripora on WhatsApp →</a>
+  </section>
+</main>
+
+<footer class="results-footer">
+  <a href="index.html">← Back to Tripora home</a>
+  <span>TRIPORA · Travel Beyond Boundaries</span>
+</footer>
+
+<script src="hotel-data.js?v=20261009-1"></script>
+<script src="hotel-results-page.js?v=20261009-1"></script>
+</body>
+</html>
