@@ -953,6 +953,14 @@ function render(tabName){
   const activeFields=getActiveFields(tabName);
 
   fieldsEl.innerHTML=activeFields.map(([id,label,type,placeholder])=>{
+    if(tabName==="Hotels" && id==="hoteltype"){
+      const options=suggestionOptions.hoteltype.map(option=>'<option value="'+option+'">'+option+'</option>').join("");
+      return '<div class="search-field hotel-preference-field">' +
+        '<label for="field-hoteltype">Hotel Preference</label>' +
+        '<select id="field-hoteltype" name="hoteltype" required>' +
+          '<option value="" disabled selected>Select preference</option>' + options +
+        '</select></div>';
+    }
     if(tabName==="Hotels" && id==="guests"){
       return '<div class="search-field rooms-guests-field">' +
         '<label for="field-guests">Rooms &amp; Guests</label>' +
