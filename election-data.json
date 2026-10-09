@@ -1,12 +1,24 @@
 {
   "source": "Election Commission of India",
   "source_url": "https://results.eci.gov.in/ResultPcByeOct2026/ConstituencywiseS039.htm",
-  "last_checked_utc": null,
-  "source_updated_at": "09 Oct 2026, 10:06 AM IST (last verified snapshot)",
-  "status": "seed_snapshot",
+  "last_checked_utc": "2026-10-09T09:58:22+00:00",
+  "source_updated_at": "2026-10-09T09:58:22+00:00",
+  "status": "auto_checked",
   "candidates": {
-    "bjp": {"name": "Devasish Sharma", "party": "BJP", "votes": 47402},
-    "aiudf": {"name": "Mohammed Badruddin Ajmal", "party": "AIUDF", "votes": 21107},
-    "inc": {"name": "Sibamoni Bora", "party": "INC", "votes": 6544}
+    "bjp": {
+      "name": "Devasish Sharma",
+      "party": "BJP",
+      "votes": 500913
+    },
+    "aiudf": {
+      "name": "Mohammed Badruddin Ajmal",
+      "party": "AIUDF",
+      "votes": 368388
+    },
+    "inc": {
+      "name": "Sibamoni Bora",
+      "party": "INC",
+      "votes": 91503
+    }
   }
 }
