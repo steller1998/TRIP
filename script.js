@@ -2,7 +2,7 @@ const WHATSAPP_NUMBER="919181565815";
 const WHATSAPP_URL="https://wa.me/"+WHATSAPP_NUMBER;
 
 const configs={
-  Flights:{helper:"Book domestic and international flights with Tripora.",fields:[
+  Flights:{helper:"Book domestic and international flights with Abida Travels.",fields:[
     ["from","From","text","Delhi / Airport"],
     ["to","To","text","Mumbai / Dubai"],
     ["departure","Departure","date",""],
@@ -858,6 +858,7 @@ function setupHotelRoomsGuests(){
 
 function render(tabName){
   activeTab=tabName;
+  fieldsEl.dataset.service=tabName;
   const cfg=configs[tabName];
   const activeFields=getActiveFields(tabName);
 
@@ -934,7 +935,7 @@ document.getElementById("searchForm").addEventListener("submit",e=>{
     return;
   }
 
-  const lines=["Hello Tripora,","",`I want ${activeTab} booking assistance.`,""];
+  const lines=["Hello Abida Travels,","",`I want ${activeTab} booking assistance.`,""];
   if(activeTab==="Flights"){
     const mode=document.querySelector('input[name="flightMode"]:checked');
     const fare=document.querySelector('input[name="specialFare"]:checked');
@@ -952,7 +953,23 @@ document.getElementById("searchForm").addEventListener("submit",e=>{
 
 document.querySelectorAll('input[name="flightMode"]').forEach(input=>{
   input.addEventListener("change",()=>{
-    render("Flights");
+    
+document.querySelectorAll("[data-service-card]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const service=button.getAttribute("data-service-card");
+    if(!configs[service]) return;
+    selectTab(service,false);
+    booking.scrollIntoView({behavior:"smooth",block:"center"});
+  });
+});
+document.querySelectorAll("[data-scroll-booking]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    booking.scrollIntoView({behavior:"smooth",block:"center"});
+    fieldsEl.querySelector("input:not([type=hidden])")?.focus({preventScroll:true});
+  });
+});
+
+render("Flights");
   });
 });
 
@@ -1017,7 +1034,7 @@ document.getElementById("accountForm").addEventListener("submit",e=>{
   const name=data.get("name");
   const phone=data.get("phone");
   const title=document.getElementById("accountTitle")?.textContent||"Login / Sign up";
-  const msg=`Hello Tripora,\n\nI want to use Tripora account support.\nName: ${name}\nMobile: ${phone}\nRequest: ${title}.\n\nPlease help me with the next step.`;
+  const msg=`Hello Abida Travels,\n\nI want to use Abida Travels account support.\nName: ${name}\nMobile: ${phone}\nRequest: ${title}.\n\nPlease help me with the next step.`;
   window.open(WHATSAPP_URL+"?text="+encodeURIComponent(msg),"_blank");
   closeAccountModal();
   e.currentTarget.reset();
