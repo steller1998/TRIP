@@ -118,7 +118,7 @@
   }
   function makeEnquiryLink(hotel){
     const lines=[
-      "Hello Tripora,",
+      "Hello Abida Travels,",
       "",
       "Please help me enquire about this hotel sample listing: "+hotel.n,
       ...buildStayContext(),
@@ -166,7 +166,7 @@
       ["Preference",preference]
     ];
     $("#staySummaryChips").innerHTML=chips.map(chip=>'<span class="stay-chip"><span>'+escapeHtml(chip[0])+'</span>'+escapeHtml(chip[1])+'</span>').join("");
-    $("#generalEnquiry").href="https://wa.me/919181565815?text="+encodeURIComponent(["Hello Tripora, I need hotel booking help.","",...buildStayContext()].join("\n"));
+    $("#generalEnquiry").href="https://wa.me/919181565815?text="+encodeURIComponent(["Hello Abida Travels, I need hotel booking help.","",...buildStayContext()].join("\n"));
   }
   function drawResults(){
     const sort=$("#sortResults").value;
