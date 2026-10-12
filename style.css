@@ -347,3 +347,86 @@ img{display:block;max-width:100%}
   .hotel-result-content{padding:12px}
   .hotel-result-content h3{font-size:14px}
 }
+
+
+/* PREMIUM INTERACTIONS — visual polish only; layout and page palette stay unchanged */
+:root{--tripora-motion:cubic-bezier(.2,.75,.25,1)}
+button,a,.offer-card,.destination-card,.hotel-result-card{
+  -webkit-tap-highlight-color:transparent;
+}
+button{
+  transition:transform .22s var(--tripora-motion),box-shadow .22s var(--tripora-motion),border-color .22s var(--tripora-motion),color .22s var(--tripora-motion),filter .22s var(--tripora-motion);
+}
+button:focus-visible,a:focus-visible{
+  outline:3px solid rgba(0,103,255,.32);
+  outline-offset:3px;
+}
+button:active:not(:disabled){
+  transform:translateY(0) scale(.98);
+}
+button:disabled{cursor:not-allowed;filter:saturate(.65)}
+/* Keep the existing header/nav positions, but give service symbols a crisp icon tile. */
+.nav-service .nav-icon{
+  width:30px;height:30px;display:grid;place-items:center;
+  border:1px solid rgba(80,116,170,.12);border-radius:10px;
+  background:linear-gradient(145deg,#f7faff 0%,#edf4ff 100%);
+  color:var(--blue);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 6px rgba(22,55,99,.045);
+  transition:transform .24s var(--tripora-motion),box-shadow .24s var(--tripora-motion),border-color .24s var(--tripora-motion);
+}
+.nav-service .nav-icon svg,.booking-tab .service-icon svg{
+  width:17px;height:17px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+}
+.nav-service:hover .nav-icon{transform:translateY(-2px);border-color:rgba(0,103,255,.3);box-shadow:inset 0 1px 0 #fff,0 5px 12px rgba(0,103,255,.12)}
+.nav-service.active .nav-icon{background:linear-gradient(145deg,#e9f2ff 0%,#dceaff 100%);border-color:rgba(0,103,255,.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 5px 13px rgba(0,103,255,.13)}
+.nav-service.active:after{height:3px;box-shadow:0 0 10px rgba(0,103,255,.2)}
+/* Booking service icons get a compact premium badge without changing tab order. */
+.booking-tab .service-icon{
+  display:inline-grid;width:22px;height:22px;vertical-align:middle;place-items:center;
+  margin-right:6px;color:var(--blue);background:linear-gradient(145deg,#f5f9ff,#eaf2ff);
+  border:1px solid rgba(80,116,170,.14);border-radius:7px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
+}
+.booking-tab:hover .service-icon{border-color:rgba(0,103,255,.28);box-shadow:0 3px 8px rgba(0,103,255,.1)}
+.booking-tab.active .service-icon{background:linear-gradient(145deg,#eaf2ff,#dceaff);border-color:rgba(0,103,255,.25)}
+.booking-tab.active:after{box-shadow:0 0 10px rgba(0,103,255,.16)}
+/* Primary actions: richer depth and a subtle sheen while preserving the current blue palette. */
+.search-btn,.primary-btn,.hotel-enquire-button{
+  position:relative;isolation:isolate;overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,103,255,.18),inset 0 1px 0 rgba(255,255,255,.18);
+}
+.search-btn:before,.primary-btn:before,.hotel-enquire-button:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(115deg,rgba(255,255,255,.18),transparent 38%,rgba(255,255,255,.07));
+  opacity:.7;transition:opacity .22s ease;
+}
+.search-btn:hover,.primary-btn:hover,.hotel-enquire-button:hover{
+  filter:saturate(1.08);box-shadow:0 13px 28px rgba(0,103,255,.25),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.search-btn:active,.primary-btn:active,.hotel-enquire-button:active{filter:saturate(.95)}
+.login-btn{box-shadow:0 2px 5px rgba(24,42,73,.035)}
+.login-btn:hover{box-shadow:0 6px 16px rgba(0,103,255,.09)}
+.utility-btn,.helper-link,.outline-btn{transition:color .2s ease,transform .2s ease}
+.helper-link:hover,.outline-btn:hover{transform:translateY(-1px);text-shadow:0 3px 12px rgba(0,103,255,.16)}
+.booking-tools button,.extra-services button{
+  position:relative;
+}
+.booking-tools button:hover,.extra-services button:hover{
+  box-shadow:inset 0 0 0 1px rgba(0,103,255,.08);
+}
+.extra-services span{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 9px rgba(0,103,255,.08);
+  border:1px solid rgba(80,116,170,.1);
+  transition:transform .22s var(--tripora-motion),box-shadow .22s var(--tripora-motion);
+}
+.extra-services button:hover span{transform:translateY(-2px) rotate(-3deg);box-shadow:0 6px 13px rgba(0,103,255,.14)}
+.chip-grid button,.hotel-change-search{
+  box-shadow:0 2px 6px rgba(22,43,76,.025);
+}
+.chip-grid button:hover,.hotel-change-search:hover{
+  transform:translateY(-2px);box-shadow:0 7px 17px rgba(22,43,76,.075);
+}
+.offer-copy button:hover{transform:translateX(2px);text-shadow:0 3px 12px rgba(0,103,255,.16)}
+.hotel-enquire-button{transition:transform .2s var(--tripora-motion),box-shadow .2s var(--tripora-motion),filter .2s ease}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
