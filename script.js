@@ -859,6 +859,11 @@ function setupHotelRoomsGuests(){
 function render(tabName){
   activeTab=tabName;
   fieldsEl.dataset.service=tabName;
+  const searchButton=document.querySelector(".search-btn");
+  if(searchButton){
+    const searchLabel=tabName==="Holidays"?"SEARCH PACKAGES":tabName==="Tours"?"SEARCH ACTIVITIES":tabName==="Insurance"?"GET A QUOTE":"SEARCH "+tabName.toUpperCase();
+    searchButton.innerHTML=searchLabel+' <span>→</span>';
+  }
   const cfg=configs[tabName];
   const activeFields=getActiveFields(tabName);
 
