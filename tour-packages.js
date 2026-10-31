@@ -237,13 +237,52 @@
     });
   }
 
+  async function shareLink(title, url, text) {
+    const fullUrl = new URL(url, window.location.href).href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text, url: fullUrl });
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(fullUrl);
+        alert("Link copied! Share it with your friends.");
+      } else {
+        window.prompt("Copy this link and share it with your friends:", fullUrl);
+      }
+    } catch (error) {
+      if (error && error.name !== "AbortError") {
+        window.prompt("Copy this link and share it with your friends:", fullUrl);
+      }
+    }
+  }
+
+  document.addEventListener("click", event => {
+    const serviceShare = event.target.closest("[data-share-title]");
+    if (serviceShare) {
+      event.preventDefault();
+      shareLink(
+        "ABIDA TRAVELS — " + serviceShare.dataset.shareTitle,
+        window.location.origin + window.location.pathname + serviceShare.dataset.shareUrl,
+        "Explore " + serviceShare.dataset.shareTitle + " with ABIDA TRAVELS."
+      );
+    }
+  });
+
   document.getElementById("tourPackageGrid").addEventListener("click", event => {
     const view = event.target.closest("[data-tour-view]");
     const ask = event.target.closest("[data-tour-ask]");
+    const share = event.target.closest("[data-tour-share]");
     if (view) openPackage(packages.find(pkg => pkg.id === view.dataset.tourView));
     if (ask) {
       const pkg = packages.find(item => item.id === ask.dataset.tourAsk);
       if (pkg) window.open(waLink("Hello ABIDA TRAVELS, I am interested in the " + pkg.name + ". Please contact me with availability and final pricing."), "_blank", "noopener");
+    }
+    if (share) {
+      const pkg = packages.find(item => item.id === share.dataset.tourShare);
+      if (pkg) shareLink(
+        "ABIDA TRAVELS — " + pkg.name,
+        window.location.origin + window.location.pathname + "#tour-packages",
+        pkg.name + " | " + pkg.duration + " | " + pkg.priceLabel + " " + pkg.priceType + ". Explore this holiday package with ABIDA TRAVELS."
+      );
     }
   });
 
