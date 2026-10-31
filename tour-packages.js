@@ -139,6 +139,7 @@
         <div class="tour-package-card-actions">
           <button type="button" class="tour-view-btn" data-tour-view="${pkg.id}">View Details</button>
           <button type="button" class="tour-ask-btn" data-tour-ask="${pkg.id}">Ask an Expert ↗</button>
+          <button type="button" class="tour-share-btn" data-tour-share="${pkg.id}">↗ Share</button>
         </div>
       </div>
     </article>`).join("");
