@@ -895,8 +895,8 @@ function render(tabName){
   setupHotelRoomsGuests();
   setupStayDateConstraints();
   helper.textContent=cfg.helper;
-  flightModes.style.display=tabName==="Flights"?"flex":"none";
-  specialFareBox.style.display=tabName==="Flights"?"flex":"none";
+  if(flightModes) flightModes.style.display=tabName==="Flights"?"flex":"none";
+  if(specialFareBox) specialFareBox.style.display=tabName==="Flights"?"flex":"none";
 
   tabs.forEach(t=>{
     const active=t.getAttribute("data-tab")===tabName;
@@ -974,7 +974,7 @@ document.querySelectorAll("[data-scroll-booking]").forEach(button=>{
   });
 });
 
-render("Flights");
+render("Holidays");
   });
 });
 
