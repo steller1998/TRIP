@@ -95,3 +95,14 @@
 .service-share-btn:hover,.tour-share-btn:hover{background:#f0f6ff;border-color:#8eb8ef}
 .tour-package-card-actions{grid-template-columns:1fr 1fr 1fr}
 @media(max-width:420px){.tour-package-card-actions{grid-template-columns:1fr 1fr}.tour-share-btn{grid-column:1/-1}}
+
+/* Share chooser fallback for browsers without native sharing */
+.abida-share-chooser{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(10,22,42,.62);backdrop-filter:blur(5px)}
+.abida-share-panel{position:relative;width:min(420px,100%);padding:26px 22px;border-radius:18px;background:#fff;box-shadow:0 25px 80px rgba(0,0,0,.25)}
+.abida-share-panel h3{margin:0;color:#1d2c43;font:800 20px "Manrope",sans-serif}
+.abida-share-panel p{margin:8px 0 18px;color:#6b788b;font-size:12px}
+.abida-share-close{position:absolute;right:12px;top:10px;width:32px;height:32px;border:0;border-radius:50%;background:#f1f4f8;color:#27364d;font-size:22px;cursor:pointer}
+.abida-share-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.abida-share-options a,.abida-share-options button{display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px;border:1px solid #dce4ee;border-radius:10px;background:#f8faff;color:#075fce;text-decoration:none;font:700 12px "DM Sans",sans-serif;cursor:pointer}
+.abida-share-options a:hover,.abida-share-options button:hover{background:#edf5ff;border-color:#9fc4f6}
+.abida-share-panel small{display:block;margin-top:15px;color:#7b8797;font-size:10px;line-height:1.6}
