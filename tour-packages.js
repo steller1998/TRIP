@@ -239,20 +239,52 @@
 
   async function shareLink(title, url, text) {
     const fullUrl = new URL(url, window.location.href).href;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title, text, url: fullUrl });
-      } else if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(fullUrl);
-        alert("Link copied! Share it with your friends.");
-      } else {
-        window.prompt("Copy this link and share it with your friends:", fullUrl);
-      }
-    } catch (error) {
-      if (error && error.name !== "AbortError") {
-        window.prompt("Copy this link and share it with your friends:", fullUrl);
+    const shareData = { title, text, url: fullUrl };
+
+    // On supported phones/tablets, this opens the operating system's native
+    // share sheet so the visitor can choose any compatible installed app.
+    if (typeof navigator.share === "function") {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (error) {
+        if (error && error.name === "AbortError") return;
+        // If the native share sheet fails, show app-specific alternatives below.
       }
     }
+
+    // Desktop/unsupported-browser fallback: offer common share destinations.
+    const encodedUrl = encodeURIComponent(fullUrl);
+    const encodedText = encodeURIComponent(text + " " + fullUrl);
+    const chooser = document.createElement("div");
+    chooser.className = "abida-share-chooser";
+    chooser.innerHTML = `
+      <div class="abida-share-panel" role="dialog" aria-modal="true" aria-label="Share this service">
+        <button type="button" class="abida-share-close" aria-label="Close">×</button>
+        <h3>Share with friends</h3>
+        <p>Choose an app to share this ABIDA TRAVELS link.</p>
+        <div class="abida-share-options">
+          <a href="https://wa.me/?text=${encodedText}" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(text)}" target="_blank" rel="noopener">Telegram</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener">Facebook</a>
+          <a href="mailto:?subject=${encodeURIComponent(title)}&body=${encodedText}">Email</a>
+          <button type="button" class="abida-copy-share">Copy link</button>
+        </div>
+        <small>On a phone, use the system share menu to see all compatible installed apps, including Instagram where supported.</small>
+      </div>`;
+    document.body.appendChild(chooser);
+    const close = () => chooser.remove();
+    chooser.addEventListener("click", event => {
+      if (event.target === chooser || event.target.closest(".abida-share-close")) close();
+    });
+    chooser.querySelector(".abida-copy-share").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(fullUrl);
+        chooser.querySelector(".abida-copy-share").textContent = "Link copied!";
+      } catch {
+        window.prompt("Copy this link:", fullUrl);
+      }
+    });
   }
 
   document.addEventListener("click", event => {
