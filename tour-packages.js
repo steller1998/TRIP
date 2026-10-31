@@ -2,7 +2,7 @@
 /* ABIDA TRAVELS — TOUR PACKAGES */
 (() => {
   "use strict";
-  const WA_NUMBER = "918403834454";
+  const WA_NUMBER = "9181565815";
   const CALL_NUMBER = "9395378017";
   const waLink = message => "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(message);
   const packages = [
