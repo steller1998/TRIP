@@ -23,6 +23,22 @@
       note:"This is an indicative package quotation. Final price, hotel, cab arrangements and itinerary depend on travel dates, number of guests, availability and supplier confirmation. Please confirm all inclusions before accepting payment."
     },
     {
+      id:"kashmir-couple", name:"Kashmir Couple Package", tag:"Couple Special", image:"assets/kashmir.jpg",
+      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:22000, priceLabel:"Rs 22,000", priceType:"for 2 persons", category:"Deluxe Hotel Room",
+      summary:"A 5-day Kashmir escape for two, with a Deluxe hotel stay, daily breakfast, airport transfers and sightseeing.",
+      inclusions:["4 nights accommodation in a Deluxe Hotel Room","Daily breakfast at the hotel","Airport pickup and drop","Transportation and sightseeing transfers as per itinerary","Sightseeing covering Srinagar, Gulmarg, Pahalgam and Sonamarg"],
+      exclusions:["Flight tickets / train tickets","Lunch and dinner","Entry tickets and activity charges, including Gondola rides","Personal expenses and services not mentioned under inclusions"],
+      itinerary:[
+        ["DAY 1 — ARRIVAL IN SRINAGAR","Airport pickup, hotel check-in and Srinagar local sightseeing. Overnight stay in Srinagar."],
+        ["DAY 2 — GULMARG EXCURSION","Drive to Gulmarg and enjoy the scenic mountain surroundings. Return to the hotel for overnight stay."],
+        ["DAY 3 — PAHALGAM EXCURSION","Visit Pahalgam and explore its beautiful valley and riverside scenery. Overnight stay as per itinerary."],
+        ["DAY 4 — SONAMARG EXCURSION","Enjoy a day excursion to Sonamarg, subject to weather and road conditions. Return to the hotel."],
+        ["DAY 5 — DEPARTURE","Breakfast, check-out and transfer to Srinagar Airport for your onward journey."]
+      ],
+      note:"This is an indicative quotation. Final price and arrangements are subject to travel dates, hotel and vehicle availability, weather conditions and supplier confirmation. Hotel name, exact vehicle arrangement, payment schedule and cancellation terms will be confirmed before booking.",
+      fixedGuests:2
+    },
+    {
       id:"alibaug", name:"Alibaug Couple Tour Package", tag:"Couple Special", image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85",
       destination:"Alibaug, Maharashtra", duration:"3 Nights / 4 Days", price:29999, priceLabel:"₹29,999", priceType:"for 2 adults", category:"3 Star / Similar",
       summary:"A private couple getaway with a Deluxe room, breakfast and AC sedan transfers.",
@@ -177,7 +193,7 @@
           <div class="tour-form-field"><label for="tourPackagePrice">Package Price (Estimated)</label><input id="tourPackagePrice" name="packagePrice" value="${escapeHTML(pkg.priceLabel + (pkg.fixedGuests ? " for 2 adults" : " per person"))}" readonly></div>
           <div class="tour-form-field"><label for="tourCustomerName">Your Full Name</label><input id="tourCustomerName" name="customerName" type="text" placeholder="Enter your full name" autocomplete="name" required></div>
           <div class="tour-form-field"><label for="tourCustomerPhone">Mobile Number</label><input id="tourCustomerPhone" name="customerPhone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required></div>
-          <div class="tour-form-total"><span>Estimated package amount</span><strong id="tourTotalAmount">${pkg.fixedGuests ? "₹29,999" : "₹" + pkg.price.toLocaleString("en-IN") + " × 2"}</strong></div>
+          <div class="tour-form-total"><span>Estimated package amount</span><strong id="tourTotalAmount">${pkg.fixedGuests ? formatINR(pkg.price) : formatINR(pkg.price * 2)}</strong></div>
           <button type="submit" class="tour-form-submit">Submit Booking Enquiry →</button>
         </form>
       </div>`;
@@ -204,8 +220,8 @@
       const totalField = document.getElementById("tourTotalAmount");
       const priceField = document.getElementById("tourPackagePrice");
       if (pkg.fixedGuests) {
-        totalField.textContent = "₹29,999 (2 adults)";
-        priceField.value = "₹29,999 for 2 adults";
+        totalField.textContent = formatINR(pkg.price) + " (2 adults)";
+        priceField.value = formatINR(pkg.price) + " for 2 adults";
       } else {
         totalField.textContent = formatINR(pkg.price * count);
         priceField.value = pkg.priceLabel + " × " + count + " = " + formatINR(pkg.price * count);
