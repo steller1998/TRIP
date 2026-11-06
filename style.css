@@ -618,3 +618,81 @@ button:focus-visible,a:focus-visible{outline:3px solid rgba(0,103,255,.32);outli
   .service-trust-strip small{font-size:8px}
   .more-services-inline{padding-bottom:15px}
 }
+
+
+/* ABIDA TRAVELS — premium atmosphere refresh (layout preserved) */
+:root{
+  --abida-ink:#102b4e;
+  --abida-blue:#1768c5;
+  --abida-sky:#eaf4ff;
+}
+body{
+  background:
+    radial-gradient(ellipse at 8% 12%,rgba(190,220,255,.24),transparent 34%),
+    radial-gradient(ellipse at 92% 42%,rgba(225,213,255,.16),transparent 30%),
+    #fbfdff;
+}
+.hero{
+  background:linear-gradient(135deg,#eaf4ff 0%,#f8fbff 48%,#f2f1ff 100%);
+  border-bottom:1px solid rgba(151,181,220,.28);
+}
+.hero-banner{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 82% 18%,rgba(109,174,245,.22),transparent 36%),
+    radial-gradient(ellipse at 12% 88%,rgba(192,218,255,.30),transparent 38%),
+    linear-gradient(115deg,#f8fbff 0%,#edf5ff 54%,#f7f6ff 100%);
+}
+.hero-banner:before,
+.hero-banner:after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:50%;
+  filter:blur(2px);
+}
+.hero-banner:before{
+  width:390px;height:390px;right:-115px;top:-210px;
+  border:1px solid rgba(79,143,218,.16);
+  box-shadow:0 0 0 34px rgba(79,143,218,.035),0 0 0 72px rgba(79,143,218,.025);
+}
+.hero-banner:after{
+  width:230px;height:230px;left:-125px;bottom:-145px;
+  background:rgba(255,255,255,.48);
+  box-shadow:0 0 70px 35px rgba(255,255,255,.35);
+}
+.hero-visual{
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:0 24px 65px rgba(22,67,119,.19),0 5px 16px rgba(22,67,119,.08);
+  background:linear-gradient(145deg,#d9eaff,#b7d5f6);
+}
+.hero-visual img{
+  mix-blend-mode:normal;
+  object-fit:cover;
+  filter:saturate(1.06) contrast(1.02);
+}
+.hero-visual:after{
+  background:linear-gradient(180deg,rgba(8,30,58,.02) 35%,rgba(8,30,58,.44));
+}
+.booking-card{
+  border:1px solid rgba(177,198,225,.7);
+  box-shadow:0 24px 65px rgba(24,59,103,.14),0 5px 16px rgba(24,59,103,.055);
+}
+.light-section,.white-section{
+  background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);
+}
+.soft-section,.route-section{
+  background:
+    radial-gradient(ellipse at 10% 20%,rgba(193,220,255,.26),transparent 35%),
+    linear-gradient(135deg,#f2f7ff 0%,#f8faff 55%,#f4f5ff 100%);
+}
+.offer-card,.destination-card,.service-photo-card{
+  box-shadow:0 12px 32px rgba(22,57,101,.075);
+}
+@media(prefers-reduced-motion:no-preference){
+  .hero-visual{transition:transform .45s ease,box-shadow .45s ease}
+  .hero-visual:hover{transform:translateY(-4px);box-shadow:0 30px 75px rgba(22,67,119,.23)}
+}
