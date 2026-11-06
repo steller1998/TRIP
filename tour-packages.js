@@ -24,7 +24,7 @@
     },
     {
       id:"kashmir-couple", name:"Kashmir Couple Package", tag:"Couple Special", image:"assets/kashmir.jpg",
-      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:22000, priceLabel:"Rs 22,000", priceType:"for 2 persons", category:"Deluxe Hotel Room",
+      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:22000, priceLabel:"₹22,000", priceType:"for 2 persons", category:"Deluxe Hotel Room",
       summary:"A 5-day Kashmir escape for two, with a Deluxe hotel stay, daily breakfast, airport transfers and sightseeing.",
       inclusions:["4 nights accommodation in a Deluxe Hotel Room","Daily breakfast at the hotel","Airport pickup and drop","Transportation and sightseeing transfers as per itinerary","Sightseeing covering Srinagar, Gulmarg, Pahalgam and Sonamarg"],
       exclusions:["Flight tickets / train tickets","Lunch and dinner","Entry tickets and activity charges, including Gondola rides","Personal expenses and services not mentioned under inclusions"],
