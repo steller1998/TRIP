@@ -4,6 +4,7 @@
   "use strict";
   const WA_NUMBER = "9181565815";
   const CALL_NUMBER = "9395378017";
+  const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbyaiSoqTeV-__mTDIE6jJcOa3Xsvv1P2hmcYMIOkUECG_RTgG2PWdF4Gwvg6mHMntBJxg/exec";
   const waLink = message => "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(message);
   const packages = [
     {
@@ -102,18 +103,17 @@
   success.innerHTML = `
     <div class="tour-success-card" role="dialog" aria-modal="true" aria-labelledby="tourSuccessTitle">
       <div class="tour-success-icon">✓</div>
-      <h3 id="tourSuccessTitle">Your Enquiry Is Ready!</h3>
-      <p>Your booking details have been prepared in WhatsApp. Please tap <strong>Send</strong> there to submit your request to ABIDA TRAVELS. Our team will contact you shortly after receiving it to confirm availability and the final price.</p>
+      <h3 id="tourSuccessTitle">Thank You!</h3>
+      <p id="tourSuccessMessage">Your booking enquiry has been sent to ABIDA TRAVELS. Our team will contact you shortly to confirm availability and the final price.</p>
       <p>Need immediate assistance? Call <strong>9395378017</strong>.</p>
       <div class="tour-success-actions">
-        <button type="button" id="tourSuccessWhatsapp">Open WhatsApp</button>
+        <a href="tel:+9395378017" class="tour-success-call">Call ABIDA TRAVELS</a>
         <button type="button" class="secondary" id="tourSuccessClose">Close</button>
       </div>
     </div>`;
   document.body.appendChild(success);
 
   let currentPackage = null;
-  let pendingWhatsAppUrl = "";
 
   const formatINR = value => "₹" + Math.round(value).toLocaleString("en-IN");
   const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -212,28 +212,49 @@
       }
     }
     updateTotal();
-    document.getElementById("tourBookingForm").addEventListener("submit", event => {
+    document.getElementById("tourBookingForm").addEventListener("submit", async event => {
       event.preventDefault();
-      const formData = new FormData(event.currentTarget);
-      const message = [
-        "Hello ABIDA TRAVELS,",
-        "",
-        "I would like to submit a booking enquiry.",
-        "Package: " + pkg.name,
-        "Destination: " + pkg.destination,
-        "Travel date: " + formData.get("travelDate"),
-        "Travellers: " + (pkg.fixedGuests ? "2 Adults (Couple Package)" : formData.get("travellers")),
-        "Estimated package price: " + formData.get("packagePrice"),
-        "Name: " + formData.get("customerName"),
-        "Mobile: " + formData.get("customerPhone"),
-        "",
-        "Please contact me to confirm availability, final price and booking details."
-      ].join("\n");
-      pendingWhatsAppUrl = waLink(message);
-      window.open(pendingWhatsAppUrl, "_blank", "noopener");
-      modal.classList.remove("open");
-      document.body.classList.remove("modal-open");
-      success.classList.add("open");
+      const form = event.currentTarget;
+      if (!form.reportValidity()) return;
+      const submitButton = form.querySelector('[type="submit"]');
+      if (submitButton.disabled) return;
+      const formData = new FormData(form);
+      const payload = {
+        customerName: String(formData.get("customerName") || "").trim(),
+        customerPhone: String(formData.get("customerPhone") || "").trim(),
+        package: pkg.name,
+        destination: pkg.destination,
+        travelDate: String(formData.get("travelDate") || ""),
+        travellers: pkg.fixedGuests ? "2 Adults (Couple Package)" : String(formData.get("travellers") || ""),
+        packagePrice: String(formData.get("packagePrice") || "")
+      };
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+      try {
+        await fetch(BOOKING_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        document.getElementById("tourSuccessTitle").textContent = "Thank You!";
+        document.getElementById("tourSuccessMessage").textContent =
+          "Your booking enquiry has been sent. Our team will contact you shortly to confirm availability and the final price.";
+        modal.classList.remove("open");
+        document.body.classList.remove("modal-open");
+        form.reset();
+        updateTotal();
+        success.classList.add("open");
+      } catch (error) {
+        document.getElementById("tourSuccessTitle").textContent = "Enquiry Not Sent";
+        document.getElementById("tourSuccessMessage").textContent =
+          "We could not send your enquiry just now. Please try again or call ABIDA TRAVELS on 9395378017.";
+        success.classList.add("open");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Booking Enquiry →";
+      }
     });
   }
 
@@ -326,9 +347,6 @@
   });
   success.addEventListener("click", event => {
     if (event.target === success) success.classList.remove("open");
-  });
-  document.getElementById("tourSuccessWhatsapp").addEventListener("click", () => {
-    if (pendingWhatsAppUrl) window.open(pendingWhatsAppUrl, "_blank", "noopener");
   });
   document.getElementById("tourSuccessClose").addEventListener("click", () => success.classList.remove("open"));
   document.addEventListener("keydown", event => {
