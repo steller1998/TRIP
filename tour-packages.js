@@ -39,6 +39,22 @@
       fixedGuests:2
     },
     {
+      id:"royal-kashmir-luxury", name:"Royal Kashmir Luxury Escape", tag:"Luxury Couple Special", image:"assets/kashmir.jpg",
+      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:34999, priceLabel:"₹34,999", priceType:"per couple (2 adults)", category:"Premium 4-Star Hotel + Luxury Houseboat",
+      summary:"An exclusive Kashmir couple escape with premium hotel stays, a luxury lake-view houseboat, private sedan, Shikara ride and romantic touches.",
+      inclusions:["3 nights in a premium 4-star hotel (or equivalent category)","1 night in a luxury lake-view houseboat in Srinagar","Daily breakfast and dinner throughout the stay","Private luxury sedan for airport transfers and planned sightseeing","Romantic Shikara ride on Dal Lake","Special candlelight dinner and couple room decoration (subject to property availability and confirmation)","Welcome drinks and dedicated trip assistance"],
+      exclusions:["Airfare / train tickets","Gondola tickets","Pony rides and local union vehicles","Attraction entry fees","Lunch","Personal expenses and tips","Adventure activities","Any service not specifically listed under inclusions"],
+      itinerary:[
+        ["DAY 1 — ARRIVAL IN SRINAGAR","Airport welcome, private transfer, hotel check-in and relaxed evening around Dal Lake / Boulevard Road. Overnight in premium hotel."],
+        ["DAY 2 — GULMARG","Private excursion to Gulmarg for mountain views and leisure time. Gondola ride can be arranged separately. Return to Srinagar."],
+        ["DAY 3 — PAHALGAM","Scenic drive to Pahalgam, explore the Lidder River surroundings and valley views. Return to Srinagar for your luxury houseboat stay and dinner."],
+        ["DAY 4 — SONAMARG","Full-day private excursion to Sonamarg, subject to weather and road conditions. Return to Srinagar for overnight stay at the premium hotel."],
+        ["DAY 5 — DEPARTURE","Breakfast, check-out and private transfer to Srinagar Airport."]
+      ],
+      note:"This is an indicative package proposal, not a confirmed reservation or supplier quotation. ₹34,999 is a suggested selling price and must be reconfirmed against travel dates, hotel / houseboat category, vehicle availability, taxes and supplier rates. Final hotel names, exact meal plan, houseboat location, inclusions, cancellation terms and payment schedule will be shared before booking. Sightseeing access may change due to weather, traffic, local regulations or road conditions.",
+      fixedGuests:2
+    },
+    {
       id:"alibaug", name:"Alibaug Couple Tour Package", tag:"Couple Special", image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85",
       destination:"Alibaug, Maharashtra", duration:"3 Nights / 4 Days", price:29999, priceLabel:"₹29,999", priceType:"for 2 adults", category:"3 Star / Similar",
       summary:"A private couple getaway with a Deluxe room, breakfast and AC sedan transfers.",
