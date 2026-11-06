@@ -107,7 +107,7 @@
       <p id="tourSuccessMessage">Your booking enquiry has been sent to ABIDA TRAVELS. Our team will contact you shortly to confirm availability and the final price.</p>
       <p>Need immediate assistance? Call <strong>9395378017</strong>.</p>
       <div class="tour-success-actions">
-        <a href="tel:+9395378017" class="tour-success-call">Call ABIDA TRAVELS</a>
+        <a href="tel:+919395378017" class="tour-success-call">Call ABIDA TRAVELS</a>
         <button type="button" class="secondary" id="tourSuccessClose">Close</button>
       </div>
     </div>`;
