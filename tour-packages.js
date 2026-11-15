@@ -9,7 +9,7 @@
   const packages = [
     {
       id:"kashmir", name:"Kashmir Tour Package", tag:"Scenic India", image:"assets/kashmir.jpg",
-      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:9750, priceLabel:"₹9,750", priceType:"per person", category:"Deluxe Room",
+      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:13750, priceLabel:"₹13,750", priceType:"per person", category:"Deluxe Room",
       summary:"A scenic Kashmir escape with hotel stay, breakfast and sightseeing transfers.",
       inclusions:["Airport pickup and drop","Transportation and sightseeing transfers as per itinerary","4 nights hotel accommodation in a Deluxe Room","Daily breakfast at the hotel"],
       exclusions:["Flight tickets","Lunch and dinner","Entry tickets and activity charges, including Gondola rides","Personal expenses","Anything not listed in package inclusions"],
@@ -24,7 +24,7 @@
     },
     {
       id:"kashmir-couple", name:"Kashmir Couple Package", tag:"Couple Special", image:"assets/kashmir.jpg",
-      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:22000, priceLabel:"₹22,000", priceType:"for 2 persons", category:"Deluxe Hotel Room",
+      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:26000, priceLabel:"₹26,000", priceType:"for 2 persons", category:"Deluxe Hotel Room",
       summary:"A 5-day Kashmir escape for two, with a Deluxe hotel stay, daily breakfast, airport transfers and sightseeing.",
       inclusions:["4 nights accommodation in a Deluxe Hotel Room","Daily breakfast at the hotel","Airport pickup and drop","Transportation and sightseeing transfers as per itinerary","Sightseeing covering Srinagar, Gulmarg, Pahalgam and Sonamarg"],
       exclusions:["Flight tickets / train tickets","Lunch and dinner","Entry tickets and activity charges, including Gondola rides","Personal expenses and services not mentioned under inclusions"],
@@ -40,7 +40,7 @@
     },
     {
       id:"royal-kashmir-luxury", name:"Royal Kashmir Luxury Escape", tag:"Luxury Couple Special", image:"assets/kashmir.jpg",
-      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:34999, priceLabel:"₹34,999", priceType:"per couple (2 adults)", category:"Premium 4-Star Hotel + Luxury Houseboat",
+      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:38999, priceLabel:"₹38,999", priceType:"per couple (2 adults)", category:"Premium 4-Star Hotel + Luxury Houseboat",
       summary:"An exclusive Kashmir couple escape with premium hotel stays, a luxury lake-view houseboat, private sedan, Shikara ride and romantic touches.",
       inclusions:["3 nights in a premium 4-star hotel (or equivalent category)","1 night in a luxury lake-view houseboat in Srinagar","Daily breakfast and dinner throughout the stay","Private luxury sedan for airport transfers and planned sightseeing","Romantic Shikara ride on Dal Lake","Special candlelight dinner and couple room decoration (subject to property availability and confirmation)","Welcome drinks and dedicated trip assistance"],
       exclusions:["Airfare / train tickets","Gondola tickets","Pony rides and local union vehicles","Attraction entry fees","Lunch","Personal expenses and tips","Adventure activities","Any service not specifically listed under inclusions"],
@@ -51,12 +51,12 @@
         ["DAY 4 — SONAMARG","Full-day private excursion to Sonamarg, subject to weather and road conditions. Return to Srinagar for overnight stay at the premium hotel."],
         ["DAY 5 — DEPARTURE","Breakfast, check-out and private transfer to Srinagar Airport."]
       ],
-      note:"This is an indicative package proposal, not a confirmed reservation or supplier quotation. ₹34,999 is a suggested selling price and must be reconfirmed against travel dates, hotel / houseboat category, vehicle availability, taxes and supplier rates. Final hotel names, exact meal plan, houseboat location, inclusions, cancellation terms and payment schedule will be shared before booking. Sightseeing access may change due to weather, traffic, local regulations or road conditions.",
+      note:"This is an indicative package proposal, not a confirmed reservation or supplier quotation. ₹38,999 is a suggested selling price and must be reconfirmed against travel dates, hotel / houseboat category, vehicle availability, taxes and supplier rates. Final hotel names, exact meal plan, houseboat location, inclusions, cancellation terms and payment schedule will be shared before booking. Sightseeing access may change due to weather, traffic, local regulations or road conditions.",
       fixedGuests:2
     },
     {
       id:"alibaug", name:"Alibaug Couple Tour Package", tag:"Couple Special", image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85",
-      destination:"Alibaug, Maharashtra", duration:"3 Nights / 4 Days", price:29999, priceLabel:"₹29,999", priceType:"for 2 adults", category:"3 Star / Similar",
+      destination:"Alibaug, Maharashtra", duration:"3 Nights / 4 Days", price:33999, priceLabel:"₹33,999", priceType:"for 2 adults", category:"3 Star / Similar",
       summary:"A private couple getaway with a Deluxe room, breakfast and AC sedan transfers.",
       inclusions:["3 nights hotel accommodation in an AC Double Deluxe Room","Daily breakfast","Private AC sedan","Mumbai pickup and drop","Sightseeing transfers to destinations listed in the itinerary"],
       exclusions:["Lunch and dinner","Entry tickets","Boat ride charges","Water sports and adventure activities","Personal expenses","Anything not mentioned in package inclusions"],
@@ -67,12 +67,12 @@
         ["DAY 4 — DEPARTURE","Breakfast, hotel check-out and private AC sedan transfer to Mumbai."]
       ],
       hotelDetails:["3 Star hotel / similar category","3 nights accommodation","1 AC Double Deluxe Room","Suggested hotels, subject to availability: Blue Waves Resort – Varsoli; Oceanature – Nagaon; The Enchanted Nest – Akshi"],
-      note:"Package price is ₹29,999 for 2 adults. Hotel and transportation are subject to availability. Final price depends on travel dates and supplier confirmation. Fort access may depend on weather and tide conditions. Confirm all inclusions before accepting payment.",
+      note:"Package price is ₹33,999 for 2 adults. Hotel and transportation are subject to availability. Final price depends on travel dates and supplier confirmation. Fort access may depend on weather and tide conditions. Confirm all inclusions before accepting payment.",
       fixedGuests:2
     },
     {
       id:"shimla", name:"Shimla Tour Package", tag:"Family / Couple", image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85",
-      destination:"Shimla & Kufri, Himachal Pradesh", duration:"3 Nights / 4 Days", price:5999, priceLabel:"₹5,999", priceType:"per person", category:"Deluxe Room",
+      destination:"Shimla & Kufri, Himachal Pradesh", duration:"3 Nights / 4 Days", price:9999, priceLabel:"₹9,999", priceType:"per person", category:"Deluxe Room",
       summary:"A mountain holiday covering Shimla town, Kufri and popular local attractions.",
       inclusions:["3 nights hotel accommodation in a Deluxe Room","Daily breakfast","Transportation as per itinerary","Shimla local sightseeing","Kufri sightseeing","Pickup and drop as per package plan"],
       exclusions:["Train / flight tickets","Lunch and dinner","Entry tickets","Adventure activities","Kufri activity charges","Personal expenses","Anything not mentioned in inclusions"],
@@ -86,7 +86,7 @@
     },
     {
       id:"manali", name:"Manali Tour Package", tag:"Family / Couple", image:"assets/manali.jpg",
-      destination:"Manali, Solang Valley, Atal Tunnel & Sissu", duration:"4 Nights / 5 Days", price:7999, priceLabel:"₹7,999", priceType:"per person", category:"Deluxe Room",
+      destination:"Manali, Solang Valley, Atal Tunnel & Sissu", duration:"4 Nights / 5 Days", price:11999, priceLabel:"₹11,999", priceType:"per person", category:"Deluxe Room",
       summary:"A Himalayan getaway with mountain sightseeing and private cab arrangements.",
       inclusions:["4 nights hotel accommodation in a Deluxe Room","Daily breakfast","Private cab / transportation as per itinerary (full inclusion details pending)"],
       exclusions:["Full exclusions list not yet supplied"],
