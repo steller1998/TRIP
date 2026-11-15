@@ -9,7 +9,7 @@
   const packages = [
     {
       id:"kashmir", name:"Kashmir Tour Package", tag:"Scenic India", image:"assets/kashmir.jpg",
-      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:13750, priceLabel:"₹13,750", priceType:"per person", category:"Deluxe Room",
+      destination:"Srinagar, Gulmarg, Pahalgam & Sonamarg", duration:"4 Nights / 5 Days", price:16750, priceLabel:"₹16,750", priceType:"per person", category:"Deluxe Room",
       summary:"A scenic Kashmir escape with hotel stay, breakfast and sightseeing transfers.",
       inclusions:["Airport pickup and drop","Transportation and sightseeing transfers as per itinerary","4 nights hotel accommodation in a Deluxe Room","Daily breakfast at the hotel"],
       exclusions:["Flight tickets","Lunch and dinner","Entry tickets and activity charges, including Gondola rides","Personal expenses","Anything not listed in package inclusions"],
